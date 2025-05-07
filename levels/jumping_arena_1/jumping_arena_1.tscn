@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://cl0qeocx6gpnl"]
+
+[ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cfbto"]
+albedo_color = Color(0.206106, 0.148485, 0.0736262, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7a7xo"]
+material = SubResource("StandardMaterial3D_cfbto")
+size = Vector2(100, 100)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cfbto"]
+sky_top_color = Color(0.395375, 0.448153, 0.562972, 1)
+sky_horizon_color = Color(0.60411, 0.658577, 0.750906, 1)
+ground_bottom_color = Color(0.0235924, 0.210379, 0.137841, 1)
+
+[sub_resource type="Sky" id="Sky_7a7xo"]
+sky_material = SubResource("ProceduralSkyMaterial_cfbto")
+
+[sub_resource type="Environment" id="Environment_eg61u"]
+background_mode = 2
+sky = SubResource("Sky_7a7xo")
+ambient_light_source = 3
+ambient_light_color = Color(0.611868, 0.534894, 0.819852, 1)
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.468534, 0.545935, 0.73716, 1)
+fog_density = 0.0737
+fog_depth_curve = 1.7411
+fog_depth_begin = 0.0
+
+[node name="JumpingArena1" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_7a7xo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_7a7xo")
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.313313, 0.94965, 0, -0.94965, 0.313313, 0, 47.0768, 37.923)
+light_color = Color(0.941176, 0.941176, 0.87451, 1)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_eg61u")
+
+[node name="Horse" parent="." instance=ExtResource("1_7a7xo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30935, 0, -1.95628)
