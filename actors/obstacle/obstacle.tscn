@@ -1,0 +1,135 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgq4i734dmumc"]
+
+[ext_resource type="Script" uid="uid://c8qt6h77wb2ow" path="res://actors/obstacle/obstacle.gd" id="1_mgvnl"]
+[ext_resource type="Script" uid="uid://cykl2ulj4cbti" path="res://actors/obstacle/pole.gd" id="2_hh74y"]
+[ext_resource type="Texture2D" uid="uid://s4rg30o7ue6r" path="res://assets/icon.svg" id="3_io0e8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mgvnl"]
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mgvnl"]
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mgvnl"]
+height = 4.0
+radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgvnl"]
+albedo_color = Color(0.39724, 0.018337, 0.0850464, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hh74y"]
+material = SubResource("StandardMaterial3D_mgvnl")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_drcfa"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_io0e8"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 4.0
+
+[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles")]
+script = ExtResource("1_mgvnl")
+indicator_max_height = 3.0
+indicator = NodePath("Indicator")
+poles = [NodePath("Pole1"), NodePath("Pole2"), NodePath("Pole3"), NodePath("Pole4"), NodePath("Pole5")]
+
+[node name="SidePole1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SidePole1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SidePole1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_mgvnl")
+
+[node name="SidePole2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SidePole2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SidePole2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_mgvnl")
+
+[node name="Pole5" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.9, 0)
+collision_layer = 3
+collision_mask = 2
+freeze = true
+script = ExtResource("2_hh74y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole5"]
+shape = SubResource("CylinderShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole5"]
+mesh = SubResource("CylinderMesh_hh74y")
+
+[node name="Pole4" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.5, 0)
+collision_layer = 3
+collision_mask = 2
+freeze = true
+script = ExtResource("2_hh74y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole4"]
+shape = SubResource("CylinderShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole4"]
+mesh = SubResource("CylinderMesh_drcfa")
+
+[node name="Pole3" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.1, 0)
+collision_layer = 3
+collision_mask = 2
+freeze = true
+script = ExtResource("2_hh74y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole3"]
+shape = SubResource("CylinderShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole3"]
+mesh = SubResource("CylinderMesh_hh74y")
+
+[node name="Pole2" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.7, 0)
+collision_layer = 3
+collision_mask = 2
+freeze = true
+script = ExtResource("2_hh74y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole2"]
+shape = SubResource("CylinderShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole2"]
+mesh = SubResource("CylinderMesh_io0e8")
+
+[node name="Pole1" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.3, 0)
+collision_layer = 3
+collision_mask = 2
+freeze = true
+script = ExtResource("2_hh74y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pole1"]
+shape = SubResource("CylinderShape3D_mgvnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pole1"]
+mesh = SubResource("CylinderMesh_hh74y")
+
+[node name="Indicator" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3008, 0)
+pixel_size = 0.005
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("3_io0e8")

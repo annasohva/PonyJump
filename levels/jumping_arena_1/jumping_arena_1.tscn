@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=9 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
+[ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
 
@@ -36,11 +37,14 @@ fog_depth_begin = 0.0
 [node name="JumpingArena1" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 7
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+layers = 7
 mesh = SubResource("PlaneMesh_7a7xo")
 skeleton = NodePath("../..")
 
@@ -54,3 +58,6 @@ environment = SubResource("Environment_eg61u")
 
 [node name="Horse" parent="." instance=ExtResource("1_7a7xo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30935, 0, -1.95628)
+
+[node name="Obstacle" parent="." instance=ExtResource("2_eg61u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11405, -4.76837e-07, 0.822827)
