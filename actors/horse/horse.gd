@@ -11,12 +11,16 @@ enum Gaits
 	Gallop = 4
 }
 
-const TURNING_SPEED = 2
-const JUMP_VELOCITY = 4.5
+const TURNING_SPEED := 3
+const CAMERA_SPEED := 0.8
+const JUMP_VELOCITY := 4.5
 
-@onready var spring_arm: SpringArm3D = $SpringArm3D
+@onready var spring_arm: SpringArm3D = $Pivot/SpringArm3D
+@onready var pivot: Node3D = $Pivot
 
 var camera_rotation: Vector2 = Vector2.ZERO
+
+var speed := 0
 var current_gait: Gaits = Gaits.Stop
 
 
@@ -34,29 +38,19 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("forward"):
 		current_gait = clamp(current_gait + 1, Gaits.Back, Gaits.Gallop)
+		adjust_speed()
 	
 	if event.is_action_pressed("backward"):
 		current_gait = clamp(current_gait - 1, Gaits.Back, Gaits.Gallop)
+		adjust_speed()
 
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	# Rotate and move camera
-	spring_arm.rotation_degrees.x = camera_rotation.x
-	spring_arm.rotation_degrees.y = camera_rotation.y
-	spring_arm.global_position = global_position
-	
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	
-	var speed := 0
+func adjust_speed():
 	match current_gait:
 		Gaits.Back:
-			speed = 3
+			speed = -3
+		Gaits.Stop:
+			speed = 0
 		Gaits.Walk:
 			speed = 5
 		Gaits.Trot:
@@ -65,18 +59,32 @@ func _physics_process(delta: float) -> void:
 			speed = 15
 		Gaits.Gallop:
 			speed = 20
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 	
-	# Get the turn direction and handle the movement/deceleration
+	# Handle jump.
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
+	# Rotate and move camera
+	spring_arm.rotation_degrees.x = camera_rotation.x * CAMERA_SPEED
+	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
+	pivot.rotation_degrees.y = camera_rotation.y * CAMERA_SPEED
+	pivot.global_position.x = global_position.x
+	pivot.global_position.z = global_position.z
+	if is_on_floor(): pivot.global_position.y = global_position.y + 2
+	
+	#Handle movement
 	var turn_dir := Input.get_axis("left", "right")
-	
-	speed = -speed if current_gait == Gaits.Back else speed
-	velocity.x = speed
-	
 	if turn_dir:
-		velocity.z = turn_dir * TURNING_SPEED
-		rotation_degrees.y -= turn_dir * TURNING_SPEED
-	else:
-		velocity.z = move_toward(velocity.z, 0, TURNING_SPEED)
-		
-	velocity = velocity.rotated(Vector3.UP, rotation.y)
+		rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
+	
+	var direction := -transform.basis.z.normalized() * speed
+	velocity.x = direction.x
+	velocity.z = direction.z
+	
 	move_and_slide()
