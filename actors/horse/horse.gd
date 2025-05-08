@@ -20,7 +20,10 @@ const JUMP_VELOCITY := 4.5
 
 var camera_rotation: Vector2 = Vector2.ZERO
 
-var speed := 0
+var gait_speed: int = 0
+var speed: float = 0
+var acceleration: float = .5
+
 var current_gait: Gaits = Gaits.Stop
 
 
@@ -48,17 +51,17 @@ func _input(event: InputEvent) -> void:
 func adjust_speed():
 	match current_gait:
 		Gaits.Back:
-			speed = -3
+			gait_speed = -3
 		Gaits.Stop:
-			speed = 0
+			gait_speed = 0
 		Gaits.Walk:
-			speed = 5
+			gait_speed = 5
 		Gaits.Trot:
-			speed = 10
+			gait_speed = 10
 		Gaits.Canter:
-			speed = 15
+			gait_speed = 15
 		Gaits.Gallop:
-			speed = 20
+			gait_speed = 20
 
 
 func _physics_process(delta: float) -> void:
@@ -70,6 +73,19 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
+	#Handle movement
+	var turn_dir := Input.get_axis("left", "right")
+	if turn_dir:
+		rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
+	
+	speed = move_toward(speed, gait_speed, acceleration)
+	
+	var direction := -transform.basis.z.normalized() * speed
+	velocity.x = direction.x
+	velocity.z = direction.z
+	
+	move_and_slide()
+	
 	# Rotate and move camera
 	spring_arm.rotation_degrees.x = camera_rotation.x * CAMERA_SPEED
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
@@ -77,14 +93,3 @@ func _physics_process(delta: float) -> void:
 	pivot.global_position.x = global_position.x
 	pivot.global_position.z = global_position.z
 	if is_on_floor(): pivot.global_position.y = global_position.y + 2
-	
-	#Handle movement
-	var turn_dir := Input.get_axis("left", "right")
-	if turn_dir:
-		rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
-	
-	var direction := -transform.basis.z.normalized() * speed
-	velocity.x = direction.x
-	velocity.z = direction.z
-	
-	move_and_slide()
