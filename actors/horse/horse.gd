@@ -25,7 +25,9 @@ var speed: float = 0
 var acceleration: float = .5
 
 var current_gait: Gaits = Gaits.Stop
+var jump_curve: Curve3D = Curve3D.new()
 
+var timer: float = 0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -64,25 +66,46 @@ func adjust_speed():
 			gait_speed = 20
 
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+func calculate_jump_curve():
+	jump_curve.clear_points()
 	
+	var target_pos = global_position + -transform.basis.z.normalized() * 3
+	var jump_height_pos = global_position.lerp(target_pos, 0.5)
+	jump_height_pos.y += 2.5
+	
+	jump_curve.add_point(global_position)
+	jump_curve.add_point(jump_height_pos, transform.basis.z.normalized(), -transform.basis.z.normalized())
+	jump_curve.add_point(target_pos)
+
+
+func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		calculate_jump_curve()
+	
+	if (jump_curve.point_count != 0):
+		timer += delta * 2
+		global_position = jump_curve.sample_baked(timer * jump_curve.get_baked_length())
+		
+		if (global_position - jump_curve.get_point_position(jump_curve.point_count-1)).length() < 0.1:
+			timer = 0
+			jump_curve.clear_points()
+	
+	# Add the gravity.
+	if not is_on_floor() && jump_curve.point_count == 0:
+		velocity += get_gravity() * delta
 	
 	#Handle movement
-	var turn_dir := Input.get_axis("left", "right")
-	if turn_dir:
-		rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
-	
-	speed = move_toward(speed, gait_speed, acceleration)
-	
-	var direction := -transform.basis.z.normalized() * speed
-	velocity.x = direction.x
-	velocity.z = direction.z
+	if jump_curve.point_count == 0:
+		var turn_dir := Input.get_axis("left", "right")
+		if turn_dir:
+			rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
+		
+		speed = move_toward(speed, gait_speed, acceleration)
+		
+		var direction := -transform.basis.z.normalized() * speed
+		velocity.x = direction.x
+		velocity.z = direction.z
 	
 	move_and_slide()
 	
