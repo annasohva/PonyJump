@@ -39,7 +39,7 @@ mesh = SubResource("CylinderMesh_4tgt8")
 
 [node name="ObstacleVisionRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-target_position = Vector3(0, 0, -5)
+target_position = Vector3(0, 0, -30)
 collision_mask = 2
 hit_back_faces = false
 collide_with_areas = true

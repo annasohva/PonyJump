@@ -11,12 +11,28 @@ class_name Obstacle extends Node3D
 			poles[i].visible = true if i < value else false
 		height = value
 
-@export_range(0,1) var indicator_value: float:
+@export_category("Node references")
+@export var indicator: Sprite3D
+@export var poles: Array[Pole]
+@export var landing_pos1: Marker3D
+@export var landing_pos2: Marker3D
+
+var indicator_max: float:
+	get:
+		return get_obstacle_height() + 1
+
+var indicator_min: float:
+	get:
+		return poles[0].position.y
+
+var indicator_value: float:
 	get:
 		return indicator_value
 	set(value):
+		indicator_value = clamp(value, indicator_min, indicator_max)
+		
 		# Adjusting indicator position
-		indicator.position.y = (INDICATOR_MAX - INDICATOR_MIN) * indicator_value + INDICATOR_MIN
+		indicator.position.y = indicator_value
 		
 		# Updating indicator color
 		match get_indicator_position():
@@ -28,18 +44,8 @@ class_name Obstacle extends Node3D
 				indicator.modulate = Color.BLUE
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
-		
-		indicator_value = value
-
-@export_category("Node references")
-@export var indicator: Sprite3D
-@export var poles: Array[Pole]
-@export var landing_pos1: Marker3D
-@export var landing_pos2: Marker3D
 
 const INDICATOR_OFFSET: float = 0.35
-const INDICATOR_MAX: float = 3
-const INDICATOR_MIN: float = 0.2
 const PERFECT_RANGE: float = 0.3
 
 enum IndicatorPosition

@@ -19,9 +19,11 @@ var obstacle_height: float = 0
 var current_obstacle: Obstacle = null
 
 var timer: float = 0
+var jump_charge: float = 0
 
 const TURNING_SPEED := 3
 const CAMERA_SPEED := 0.8
+const JUMP_CHARGE_SPEED := 4
 const JUMP_VELOCITY := 2
 const JUMP_HEIGHT_OFFSET := 0.4
 
@@ -68,6 +70,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("backward"):
 		current_gait = clamp(current_gait - 1, Gaits.Back, Gaits.Gallop)
 		adjust_speed()
+	
+	if Input.is_action_just_released("jump"):
+		jump_charge = 0
 
 
 func adjust_speed():
@@ -122,12 +127,15 @@ func can_jump() -> bool:
 	return is_on_floor() \
 	and current_gait > Gaits.Walk \
 	and current_obstacle != null \
-	and obstacle_vision_ray.get_collider() != null \
+	and obstacle_vision_ray.is_colliding() \
 	and obstacle_vision_ray.get_collider().get_parent() == current_obstacle
 
 
 func _physics_process(delta: float) -> void:
 	# Handle jump.
+	if Input.is_action_pressed("jump"):
+		jump_charge += delta * JUMP_CHARGE_SPEED
+	
 	if Input.is_action_just_pressed("jump") and can_jump():
 		calculate_jump_curve()
 	
