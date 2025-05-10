@@ -16,12 +16,14 @@ var acceleration: float = .5
 var current_gait: Gaits = Gaits.Stop
 var jump_curve: Curve3D = Curve3D.new()
 var obstacle_height: float = 0
+var current_obstacle: Obstacle = null
 
 var timer: float = 0
 
 const TURNING_SPEED := 3
 const CAMERA_SPEED := 0.8
-const JUMP_VELOCITY := 4.5
+const JUMP_VELOCITY := 2
+const JUMP_HEIGHT_OFFSET := 0.4
 
 enum Gaits
 {
@@ -87,29 +89,41 @@ func adjust_speed():
 func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
 	obstacle_height = obstacle.get_obstacle_height()
 	jump_landing_pos = landing_pos
+	current_obstacle = obstacle
 
 
 func on_jumping_area_exited():
 	obstacle_height = 0
 	jump_landing_pos = Vector3.ZERO
+	current_obstacle = null
 
 
 func calculate_jump_curve():
 	jump_curve.clear_points()
-	
 	if jump_landing_pos == Vector3.ZERO: return
 	
-	#var target_pos = jump_landing_pos if jump_landing_pos != Vector3.ZERO else global_position + -transform.basis.z.normalized() * 3
-	var jump_height_pos = global_position.lerp(jump_landing_pos, 0.5)
-	jump_height_pos.y += obstacle_height + .4
+	# Calculating jump landing position so that it is in the same direction as horse is going
+	var jump_length := (jump_landing_pos - global_position).length()
+	jump_landing_pos = -global_transform.basis.z.normalized() * jump_length + global_position
 	
+	# Calculating jump height position
+	var distance_to_obstacle := (current_obstacle.global_position - global_position).length()
+	var jump_pos_weight := distance_to_obstacle / jump_length
+	var jump_height_pos := global_position.lerp(jump_landing_pos, jump_pos_weight)
+	jump_height_pos.y += obstacle_height + JUMP_HEIGHT_OFFSET
+	
+	# Adding jump trajectory points to the curve
 	jump_curve.add_point(global_position)
 	jump_curve.add_point(jump_height_pos, transform.basis.z.normalized(), -transform.basis.z.normalized())
 	jump_curve.add_point(jump_landing_pos)
 
 
 func can_jump() -> bool:
-	return is_on_floor() and current_gait > Gaits.Walk and obstacle_vision_ray.is_colliding()
+	return is_on_floor() \
+	and current_gait > Gaits.Walk \
+	and current_obstacle != null \
+	and obstacle_vision_ray.get_collider() != null \
+	and obstacle_vision_ray.get_collider().get_parent() == current_obstacle
 
 
 func _physics_process(delta: float) -> void:
@@ -118,7 +132,7 @@ func _physics_process(delta: float) -> void:
 		calculate_jump_curve()
 	
 	if (is_jumping): # Update horse position while jumping
-		timer += delta * 2
+		timer += delta * JUMP_VELOCITY
 		global_position = jump_curve.sample_baked(timer * jump_curve.get_baked_length())
 		
 		if (global_position - jump_curve.get_point_position(jump_curve.point_count-1)).length() < 0.1:
