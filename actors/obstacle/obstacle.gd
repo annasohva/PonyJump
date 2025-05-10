@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+class_name Obstacle extends Node3D
 
 
 @export_category("Obstacle settings")
@@ -54,26 +54,28 @@ enum IndicatorPosition
 func get_indicator_position() -> IndicatorPosition:
 	if indicator.position.y < poles[0].position.y + .001:
 		return IndicatorPosition.Default
-	elif indicator.position.y < poles[height-1].position.y + INDICATOR_OFFSET:
+	elif indicator.position.y < get_obstacle_height() + INDICATOR_OFFSET:
 		return IndicatorPosition.Fail
-	elif indicator.position.y < poles[height-1].position.y + PERFECT_RANGE + INDICATOR_OFFSET:
+	elif indicator.position.y < get_obstacle_height() + PERFECT_RANGE + INDICATOR_OFFSET:
 		return IndicatorPosition.Perfect
 	else:
 		return IndicatorPosition.TooHigh
 
 
+func get_obstacle_height() -> float:
+	return poles[height-1].position.y
+
+
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		# Checking that horse is facing the obstacle
-		body.jump_landing_pos = landing_pos1.global_position
+		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
 
 
 func _on_jumping_area_2_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		# Checking that horse is facing the obstacle
-		body.jump_landing_pos = landing_pos2.global_position
+		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
 
 
 func _on_jumping_area_body_exited(body: Node3D) -> void:
 	if body is Horse:
-		body.jump_landing_pos = Vector3.ZERO
+		EventSystem.OBS_jumping_area_exited.emit()

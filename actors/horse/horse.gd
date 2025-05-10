@@ -3,6 +3,11 @@ class_name Horse extends CharacterBody3D
 
 @onready var spring_arm: SpringArm3D = $Pivot/SpringArm3D
 @onready var pivot: Node3D = $Pivot
+@onready var obstacle_vision_ray: RayCast3D = $ObstacleVisionRay
+
+var is_jumping: bool:
+	get:
+		return jump_curve.point_count != 0
 
 var gait_speed: int = 0
 var speed: float = 0
@@ -10,6 +15,7 @@ var acceleration: float = .5
 
 var current_gait: Gaits = Gaits.Stop
 var jump_curve: Curve3D = Curve3D.new()
+var obstacle_height: float = 0
 
 var timer: float = 0
 
@@ -33,6 +39,16 @@ var jump_landing_pos: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _enter_tree() -> void:
+	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
+	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
+
+
+func _exit_tree() -> void:
+	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
+	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 
 
 func _input(event: InputEvent) -> void:
@@ -68,6 +84,16 @@ func adjust_speed():
 			gait_speed = 20
 
 
+func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
+	obstacle_height = obstacle.get_obstacle_height()
+	jump_landing_pos = landing_pos
+
+
+func on_jumping_area_exited():
+	obstacle_height = 0
+	jump_landing_pos = Vector3.ZERO
+
+
 func calculate_jump_curve():
 	jump_curve.clear_points()
 	
@@ -75,36 +101,40 @@ func calculate_jump_curve():
 	
 	#var target_pos = jump_landing_pos if jump_landing_pos != Vector3.ZERO else global_position + -transform.basis.z.normalized() * 3
 	var jump_height_pos = global_position.lerp(jump_landing_pos, 0.5)
-	jump_height_pos.y += 2.5
+	jump_height_pos.y += obstacle_height + .4
 	
 	jump_curve.add_point(global_position)
 	jump_curve.add_point(jump_height_pos, transform.basis.z.normalized(), -transform.basis.z.normalized())
 	jump_curve.add_point(jump_landing_pos)
 
 
+func can_jump() -> bool:
+	return is_on_floor() and current_gait > Gaits.Walk and obstacle_vision_ray.is_colliding()
+
+
 func _physics_process(delta: float) -> void:
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor() && current_gait > Gaits.Walk:
+	if Input.is_action_just_pressed("jump") and can_jump():
 		calculate_jump_curve()
 	
-	if (jump_curve.point_count != 0):
+	if (is_jumping): # Update horse position while jumping
 		timer += delta * 2
 		global_position = jump_curve.sample_baked(timer * jump_curve.get_baked_length())
 		
 		if (global_position - jump_curve.get_point_position(jump_curve.point_count-1)).length() < 0.1:
 			timer = 0
 			jump_curve.clear_points()
-	
-	# Add the gravity.
-	if not is_on_floor() && jump_curve.point_count == 0:
-		velocity += get_gravity() * delta
-	
-	#Handle movement
-	if jump_curve.point_count == 0:
+	else: # If not jumping, handle movement
+		# Add the gravity.
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+		
+		# Handle turning
 		var turn_dir := Input.get_axis("left", "right")
 		if turn_dir:
 			rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
 		
+		# Calculate speed and velocity
 		speed = move_toward(speed, gait_speed, acceleration)
 		
 		var direction := -transform.basis.z.normalized() * speed
@@ -119,4 +149,3 @@ func _physics_process(delta: float) -> void:
 	pivot.rotation_degrees.y = camera_rotation.y * CAMERA_SPEED
 	pivot.global_position.x = global_position.x
 	pivot.global_position.z = global_position.z
-	if is_on_floor(): pivot.global_position.y = global_position.y + 2

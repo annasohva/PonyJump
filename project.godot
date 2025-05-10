@@ -55,6 +55,12 @@ escape={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Horse"
+3d_physics/layer_2="Obstacle"
+3d_physics/layer_3="Camera"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

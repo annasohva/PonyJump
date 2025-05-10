@@ -36,3 +36,11 @@ fov = 60.0
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.999889, -0.0148872, 6.50736e-10, 3.82137e-15, 4.37114e-08, 1, -0.0148872, -0.999889, 4.37066e-08, -0.0143884, 1.34727, -0.670355)
 mesh = SubResource("CylinderMesh_4tgt8")
+
+[node name="ObstacleVisionRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0, -5)
+collision_mask = 2
+hit_back_faces = false
+collide_with_areas = true
+collide_with_bodies = false
