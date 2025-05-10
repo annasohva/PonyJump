@@ -1,5 +1,21 @@
-extends CharacterBody3D
+class_name Horse extends CharacterBody3D
 
+
+@onready var spring_arm: SpringArm3D = $Pivot/SpringArm3D
+@onready var pivot: Node3D = $Pivot
+
+var gait_speed: int = 0
+var speed: float = 0
+var acceleration: float = .5
+
+var current_gait: Gaits = Gaits.Stop
+var jump_curve: Curve3D = Curve3D.new()
+
+var timer: float = 0
+
+const TURNING_SPEED := 3
+const CAMERA_SPEED := 0.8
+const JUMP_VELOCITY := 4.5
 
 enum Gaits
 {
@@ -11,23 +27,9 @@ enum Gaits
 	Gallop = 4
 }
 
-const TURNING_SPEED := 3
-const CAMERA_SPEED := 0.8
-const JUMP_VELOCITY := 4.5
-
-@onready var spring_arm: SpringArm3D = $Pivot/SpringArm3D
-@onready var pivot: Node3D = $Pivot
-
 var camera_rotation: Vector2 = Vector2.ZERO
+var jump_landing_pos: Vector3 = Vector3.ZERO
 
-var gait_speed: int = 0
-var speed: float = 0
-var acceleration: float = .5
-
-var current_gait: Gaits = Gaits.Stop
-var jump_curve: Curve3D = Curve3D.new()
-
-var timer: float = 0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -69,18 +71,20 @@ func adjust_speed():
 func calculate_jump_curve():
 	jump_curve.clear_points()
 	
-	var target_pos = global_position + -transform.basis.z.normalized() * 3
-	var jump_height_pos = global_position.lerp(target_pos, 0.5)
+	if jump_landing_pos == Vector3.ZERO: return
+	
+	#var target_pos = jump_landing_pos if jump_landing_pos != Vector3.ZERO else global_position + -transform.basis.z.normalized() * 3
+	var jump_height_pos = global_position.lerp(jump_landing_pos, 0.5)
 	jump_height_pos.y += 2.5
 	
 	jump_curve.add_point(global_position)
 	jump_curve.add_point(jump_height_pos, transform.basis.z.normalized(), -transform.basis.z.normalized())
-	jump_curve.add_point(target_pos)
+	jump_curve.add_point(jump_landing_pos)
 
 
 func _physics_process(delta: float) -> void:
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() && current_gait > Gaits.Walk:
 		calculate_jump_curve()
 	
 	if (jump_curve.point_count != 0):

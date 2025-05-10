@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgq4i734dmumc"]
+[gd_scene load_steps=12 format=3 uid="uid://bgq4i734dmumc"]
 
 [ext_resource type="Script" uid="uid://c8qt6h77wb2ow" path="res://actors/obstacle/obstacle.gd" id="1_mgvnl"]
 [ext_resource type="Script" uid="uid://cykl2ulj4cbti" path="res://actors/obstacle/pole.gd" id="2_hh74y"]
@@ -33,10 +33,15 @@ top_radius = 0.1
 bottom_radius = 0.1
 height = 4.0
 
-[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_io0e8"]
+size = Vector3(4, 1, 2.5)
+
+[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "landing_pos1", "landing_pos2")]
 script = ExtResource("1_mgvnl")
 indicator = NodePath("Indicator")
 poles = [NodePath("Pole1"), NodePath("Pole2"), NodePath("Pole3"), NodePath("Pole4"), NodePath("Pole5")]
+landing_pos1 = NodePath("LandingPos1")
+landing_pos2 = NodePath("LandingPos2")
 
 [node name="SidePole1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
@@ -62,7 +67,7 @@ mesh = SubResource("BoxMesh_mgvnl")
 
 [node name="Pole5" type="RigidBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.9, 0)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 2
 freeze = true
 script = ExtResource("2_hh74y")
@@ -75,7 +80,7 @@ mesh = SubResource("CylinderMesh_hh74y")
 
 [node name="Pole4" type="RigidBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.5, 0)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 2
 freeze = true
 script = ExtResource("2_hh74y")
@@ -88,7 +93,7 @@ mesh = SubResource("CylinderMesh_drcfa")
 
 [node name="Pole3" type="RigidBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 1.1, 0)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 2
 freeze = true
 script = ExtResource("2_hh74y")
@@ -101,7 +106,7 @@ mesh = SubResource("CylinderMesh_hh74y")
 
 [node name="Pole2" type="RigidBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.7, 0)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 2
 freeze = true
 script = ExtResource("2_hh74y")
@@ -114,7 +119,7 @@ mesh = SubResource("CylinderMesh_io0e8")
 
 [node name="Pole1" type="RigidBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.3, 0)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 2
 freeze = true
 script = ExtResource("2_hh74y")
@@ -132,3 +137,28 @@ billboard = 1
 double_sided = false
 no_depth_test = true
 texture = ExtResource("3_io0e8")
+
+[node name="LandingPos1" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="LandingPos2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="JumpingArea1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.75)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpingArea1"]
+shape = SubResource("BoxShape3D_io0e8")
+
+[node name="JumpingArea2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.75)
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpingArea2"]
+shape = SubResource("BoxShape3D_io0e8")
+
+[connection signal="body_entered" from="JumpingArea1" to="." method="_on_jumping_area_1_body_entered"]
+[connection signal="body_exited" from="JumpingArea1" to="." method="_on_jumping_area_body_exited"]
+[connection signal="body_entered" from="JumpingArea2" to="." method="_on_jumping_area_2_body_entered"]
+[connection signal="body_exited" from="JumpingArea2" to="." method="_on_jumping_area_body_exited"]
