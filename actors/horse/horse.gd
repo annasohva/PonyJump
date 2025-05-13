@@ -15,7 +15,6 @@ var acceleration: float = .5
 
 var current_gait: Gaits = Gaits.Stop
 var jump_curve: Curve3D = Curve3D.new()
-var obstacle_height: float = 0
 var current_obstacle: Obstacle = null
 
 var timer: float = 0
@@ -70,9 +69,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("backward"):
 		current_gait = clamp(current_gait - 1, Gaits.Back, Gaits.Gallop)
 		adjust_speed()
-	
-	if Input.is_action_just_released("jump"):
-		jump_charge = 0
 
 
 func adjust_speed():
@@ -92,13 +88,11 @@ func adjust_speed():
 
 
 func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
-	obstacle_height = obstacle.get_obstacle_height()
 	jump_landing_pos = landing_pos
 	current_obstacle = obstacle
 
 
 func on_jumping_area_exited():
-	obstacle_height = 0
 	jump_landing_pos = Vector3.ZERO
 	current_obstacle = null
 
@@ -115,7 +109,7 @@ func calculate_jump_curve():
 	var distance_to_obstacle := (current_obstacle.global_position - global_position).length()
 	var jump_pos_weight := distance_to_obstacle / jump_length
 	var jump_height_pos := global_position.lerp(jump_landing_pos, jump_pos_weight)
-	jump_height_pos.y += obstacle_height + JUMP_HEIGHT_OFFSET
+	jump_height_pos.y += jump_charge + JUMP_HEIGHT_OFFSET
 	
 	# Adding jump trajectory points to the curve
 	jump_curve.add_point(global_position)
@@ -136,8 +130,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jump"):
 		jump_charge += delta * JUMP_CHARGE_SPEED
 	
-	if Input.is_action_just_pressed("jump") and can_jump():
-		calculate_jump_curve()
+	if Input.is_action_just_released("jump"):
+		if can_jump():
+			calculate_jump_curve()
+			EventSystem.OBS_jumped.emit(jump_charge)
+		jump_charge = 0
+	
+	EventSystem.OBS_charge_jump.emit(jump_charge)
 	
 	if (is_jumping): # Update horse position while jumping
 		timer += delta * JUMP_VELOCITY

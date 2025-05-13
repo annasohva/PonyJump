@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=10 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
+[ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
 [ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
@@ -34,7 +35,9 @@ fog_density = 0.0737
 fog_depth_curve = 1.7411
 fog_depth_begin = 0.0
 
-[node name="JumpingArena1" type="Node3D"]
+[node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
+script = ExtResource("1_suqwx")
+obstacles = [NodePath("Obstacle"), NodePath("Obstacle2"), NodePath("Obstacle3"), NodePath("Obstacle4"), NodePath("Obstacle5")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 7

@@ -23,7 +23,7 @@ var indicator_max: float:
 
 var indicator_min: float:
 	get:
-		return poles[0].position.y
+		return poles[0].position.y -.1
 
 var indicator_value: float:
 	get:
@@ -57,6 +57,20 @@ enum IndicatorPosition
 }
 
 
+func handle_jump(jump_height: float) -> void:
+	indicator.visible = false
+	for pole in poles:
+		if pole.visible:
+			if pole.position.y > jump_height: pole.fall(Vector3.FORWARD)
+
+
+func set_activate(activate: bool) -> void:
+	indicator_value = 0
+	indicator.visible = activate
+	for pole in poles:
+		pole.set_collision_layer_value(1, !activate)
+
+
 func get_indicator_position() -> IndicatorPosition:
 	if indicator.position.y < poles[0].position.y + .001:
 		return IndicatorPosition.Default
@@ -73,12 +87,12 @@ func get_obstacle_height() -> float:
 
 
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
-	if body is Horse:
+	if body is Horse && indicator.visible:
 		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
 
 
 func _on_jumping_area_2_body_entered(body: Node3D) -> void:
-	if body is Horse:
+	if body is Horse && indicator.visible:
 		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
 
 
