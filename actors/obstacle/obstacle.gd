@@ -57,18 +57,25 @@ enum IndicatorPosition
 }
 
 
-func handle_jump(jump_height: float) -> void:
-	indicator.visible = false
+func handle_jump(jump_height: float, direction: Vector3) -> void:
+	# Setting obstacle inactive
+	set_activate(false) 
+	
+	# Dropping the poles which are too high
+	var poles_dropped := 0
 	for pole in poles:
 		if pole.visible:
-			if pole.position.y > jump_height: pole.fall(Vector3.FORWARD)
+			if pole.position.y > jump_height:
+				pole.drop(direction)
+				poles_dropped += 1
+	
+	# Updating the obstacle height after 3 sec to hide dropped poles
+	if poles_dropped > 0: get_tree().create_timer(3, false, true).timeout.connect(func(): height -= poles_dropped)
 
 
 func set_activate(activate: bool) -> void:
 	indicator_value = 0
 	indicator.visible = activate
-	for pole in poles:
-		pole.set_collision_layer_value(1, !activate)
 
 
 func get_indicator_position() -> IndicatorPosition:

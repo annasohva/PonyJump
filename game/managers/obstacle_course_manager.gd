@@ -7,7 +7,7 @@ var current_obstacle: int = 0
 
 func _ready() -> void:
 	EventSystem.OBS_charge_jump.connect(charge_jump)
-	EventSystem.OBS_jumped.connect(handle_jump)
+	EventSystem.OBS_jump.connect(handle_jump)
 	obstacles[current_obstacle].set_activate(true)
 
 
@@ -16,9 +16,9 @@ func charge_jump(charge_amount: float):
 	obstacles[current_obstacle].indicator_value = charge_amount
 
 
-func handle_jump(jump_height: float):
+func handle_jump(jump_height: float, direction: Vector3):
 	if current_obstacle >= obstacles.size(): return
-	obstacles[current_obstacle].handle_jump(jump_height)
+	obstacles[current_obstacle].handle_jump(jump_height, direction)
 	activate_next_obstacle()
 
 

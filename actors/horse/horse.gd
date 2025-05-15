@@ -133,7 +133,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("jump"):
 		if can_jump():
 			calculate_jump_curve()
-			EventSystem.OBS_jumped.emit(jump_charge)
+			EventSystem.OBS_jump.emit(jump_charge, -transform.basis.z.normalized())
 		jump_charge = 0
 	
 	EventSystem.OBS_charge_jump.emit(jump_charge)
