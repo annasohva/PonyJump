@@ -45,7 +45,7 @@ var indicator_value: float:
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
 
-const INDICATOR_OFFSET: float = 0.35
+const INDICATOR_OFFSET: float = 0.2
 const PERFECT_RANGE: float = 0.3
 
 enum IndicatorPosition
@@ -65,7 +65,7 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 	var poles_dropped := 0
 	for pole in poles:
 		if pole.visible:
-			if pole.position.y > jump_height:
+			if pole.position.y >= jump_height:
 				pole.drop(direction)
 				poles_dropped += 1
 	

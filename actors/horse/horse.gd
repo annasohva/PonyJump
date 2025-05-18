@@ -109,7 +109,7 @@ func calculate_jump_curve():
 	var distance_to_obstacle := (current_obstacle.global_position - global_position).length()
 	var jump_pos_weight := distance_to_obstacle / jump_length
 	var jump_height_pos := global_position.lerp(jump_landing_pos, jump_pos_weight)
-	jump_height_pos.y += jump_charge + JUMP_HEIGHT_OFFSET
+	jump_height_pos.y += jump_charge
 	
 	# Adding jump trajectory points to the curve
 	jump_curve.add_point(global_position)
