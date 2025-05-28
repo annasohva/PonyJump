@@ -170,7 +170,6 @@ shape = SubResource("BoxShape3D_io0e8")
 
 [node name="ObstacleArea" type="Area3D" parent="."]
 collision_layer = 2
-collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -180,3 +179,4 @@ shape = SubResource("BoxShape3D_drcfa")
 [connection signal="body_exited" from="JumpingArea1" to="." method="_on_jumping_area_body_exited"]
 [connection signal="body_entered" from="JumpingArea2" to="." method="_on_jumping_area_2_body_entered"]
 [connection signal="body_exited" from="JumpingArea2" to="." method="_on_jumping_area_body_exited"]
+[connection signal="body_entered" from="ObstacleArea" to="." method="_on_obstacle_area_body_entered"]

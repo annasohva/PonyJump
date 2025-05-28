@@ -45,6 +45,10 @@ var indicator_value: float:
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
 
+var is_active: bool:
+	get:
+		return indicator.visible
+
 const INDICATOR_OFFSET: float = 0.2
 const PERFECT_RANGE: float = 0.3
 
@@ -106,3 +110,14 @@ func _on_jumping_area_2_body_entered(body: Node3D) -> void:
 func _on_jumping_area_body_exited(body: Node3D) -> void:
 	if body is Horse:
 		EventSystem.OBS_jumping_area_exited.emit()
+
+
+func _on_obstacle_area_body_entered(body: Node3D) -> void:
+	if body is Horse and is_active:
+		set_activate(false) 
+		
+		for pole in poles:
+			if pole.visible:
+				pole.crash(-body.transform.basis.z)
+		
+		EventSystem.OBS_crash.emit()
