@@ -17,6 +17,28 @@ class_name Obstacle extends Node3D
 @export var landing_pos1: Marker3D
 @export var landing_pos2: Marker3D
 
+enum IndicatorPosition
+{
+	Default,
+	Fail,
+	Perfect,
+	TooHigh
+}
+
+enum StatusType
+{
+	Inactive,
+	Active,
+	IsJumped,
+	Landed
+}
+
+const INDICATOR_OFFSET: float = 0.2
+const PERFECT_RANGE: float = 0.3
+
+var current_status: StatusType = StatusType.Inactive
+var jumping_area_jumped_from: int = 0
+
 var indicator_max: float:
 	get:
 		return get_obstacle_height() + 1
@@ -45,33 +67,19 @@ var indicator_value: float:
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
 
-var is_active: bool:
-	get:
-		return indicator.visible
-
-const INDICATOR_OFFSET: float = 0.2
-const PERFECT_RANGE: float = 0.3
-
-enum IndicatorPosition
-{
-	Default,
-	Fail,
-	Perfect,
-	TooHigh
-}
-
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:
-	# Setting obstacle inactive
-	set_activate(false) 
+	# Setting status being jumped
+	current_status = StatusType.IsJumped
 	
 	# Dropping the poles which are too high
 	var poles_dropped := 0
 	for pole in poles:
-		if pole.visible:
+		if pole.visible && !pole.is_dropped:
 			if pole.position.y >= jump_height:
 				pole.drop(direction)
 				poles_dropped += 1
+				pole.is_dropped = true
 	
 	# Updating the obstacle height after 3 sec to hide dropped poles
 	if poles_dropped > 0: get_tree().create_timer(3, false, true).timeout.connect(func(): height -= poles_dropped)
@@ -80,6 +88,8 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 func set_activate(activate: bool) -> void:
 	indicator_value = 0
 	indicator.visible = activate
+	if activate:
+		current_status = StatusType.Active
 
 
 func get_indicator_position() -> IndicatorPosition:
@@ -98,26 +108,52 @@ func get_obstacle_height() -> float:
 
 
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
-	if body is Horse && indicator.visible:
-		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
+	if body is Horse:
+		match current_status:
+			StatusType.Active:
+				EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
+				jumping_area_jumped_from = 1
+			StatusType.IsJumped:
+				if jumping_area_jumped_from == 2:
+					current_status == StatusType.Landed
 
 
 func _on_jumping_area_2_body_entered(body: Node3D) -> void:
-	if body is Horse && indicator.visible:
-		EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
+	if body is Horse:
+		match current_status:
+			StatusType.Active:
+				EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
+				jumping_area_jumped_from = 2
+			StatusType.IsJumped:
+				if jumping_area_jumped_from == 1:
+					current_status == StatusType.Landed
 
 
-func _on_jumping_area_body_exited(body: Node3D) -> void:
+func _on_jumping_area_1_body_exited(body: Node3D) -> void:
 	if body is Horse:
 		EventSystem.OBS_jumping_area_exited.emit()
+		if current_status == StatusType.Landed && jumping_area_jumped_from == 2:
+			current_status = StatusType.Inactive
+			jumping_area_jumped_from = 0
+
+
+func _on_jumping_area_2_body_exited(body: Node3D) -> void:
+	if body is Horse:
+		EventSystem.OBS_jumping_area_exited.emit()
+		if current_status == StatusType.Landed && jumping_area_jumped_from == 1:
+			current_status = StatusType.Inactive
+			jumping_area_jumped_from = 0
 
 
 func _on_obstacle_area_body_entered(body: Node3D) -> void:
-	if body is Horse and is_active:
-		set_activate(false) 
+	if body is Horse:
+		if current_status != StatusType.Inactive && current_status != StatusType.Active: return
+		
+		if current_status == StatusType.Active:
+			EventSystem.OBS_crash.emit()
+			get_tree().create_timer(3, false, true).timeout.connect(func(): height = 0)
 		
 		for pole in poles:
-			if pole.visible:
+			if pole.visible && !pole.is_dropped:
 				pole.crash(-body.transform.basis.z)
-		
-		EventSystem.OBS_crash.emit()
+				pole.is_dropped = true

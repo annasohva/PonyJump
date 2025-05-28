@@ -1,6 +1,8 @@
 class_name Pole
 extends RigidBody3D
 
+var is_dropped: bool = false
+
 
 func drop(direction: Vector3):
 	freeze = false

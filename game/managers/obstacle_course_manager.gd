@@ -28,6 +28,7 @@ func handle_crash():
 
 
 func activate_next_obstacle() -> void:
+	obstacles[current_obstacle].set_activate(false)
 	current_obstacle += 1
 	if current_obstacle >= obstacles.size(): current_obstacle = 0
 	obstacles[current_obstacle].set_activate(true)
