@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=4 uid="uid://dctqvp1pympjo"]
+[gd_scene load_steps=11 format=4 uid="uid://dctqvp1pympjo"]
 
 [ext_resource type="Script" uid="uid://biysub7v25qus" path="res://actors/horse/horse.gd" id="1_nvxhs"]
-[ext_resource type="Texture2D" uid="uid://c3pge1fdfihk5" path="res://assets/models/pony_Coat_2D_View.png" id="2_5qeg8"]
-[ext_resource type="Texture2D" uid="uid://kd0c5uppaeuo" path="res://assets/models/pony_eyes.png" id="3_ebux5"]
+[ext_resource type="Texture2D" uid="uid://c3pge1fdfihk5" path="res://assets/textures/pony/pony_coat.png" id="2_5qeg8"]
+[ext_resource type="Texture2D" uid="uid://kd0c5uppaeuo" path="res://assets/textures/pony/pony_eyes.png" id="3_ebux5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nvxhs"]
 
@@ -45,10 +45,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lwrbw")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fgo4s"]
-specular_mode = 1
-albedo_texture = ExtResource("2_5qeg8")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8iq8"]
 resource_name = "Eyes"
 cull_mode = 2
@@ -88,10 +84,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch54x")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v8plr"]
-specular_mode = 1
-albedo_texture = ExtResource("3_ebux5")
-
 [node name="Horse" type="CharacterBody3D"]
 script = ExtResource("1_nvxhs")
 
@@ -124,9 +116,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="Pony" type="MeshInstance3D" parent="pony"]
 mesh = SubResource("ArrayMesh_ksbvs")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_fgo4s")
 
 [node name="Eyes" type="MeshInstance3D" parent="pony"]
 mesh = SubResource("ArrayMesh_u0c5u")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_v8plr")

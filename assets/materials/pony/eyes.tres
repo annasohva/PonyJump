@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b7n1i5gi2nipj"]
+
+[ext_resource type="Texture2D" uid="uid://kd0c5uppaeuo" path="res://assets/textures/pony/pony_eyes.png" id="1_e1cs2"]
+
+[resource]
+specular_mode = 1
+albedo_texture = ExtResource("1_e1cs2")

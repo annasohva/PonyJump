@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cnxh6fc143dve"
-path="res://.godot/imported/pony.glb-60997e71ba3e24a3387136684ff3c6c6.scn"
+path="res://.godot/imported/pony.glb-260fa33fb582e78526ba193173073560.scn"
 
 [deps]
 
-source_file="res://assets/models/pony.glb"
-dest_files=["res://.godot/imported/pony.glb-60997e71ba3e24a3387136684ff3c6c6.scn"]
+source_file="res://assets/models/pony/pony.glb"
+dest_files=["res://.godot/imported/pony.glb-260fa33fb582e78526ba193173073560.scn"]
 
 [params]
 
@@ -32,6 +32,17 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"Coat": {
+"use_external/enabled": true,
+"use_external/path": "uid://sfv45ifadwb7"
+},
+"Eyes": {
+"use_external/enabled": true,
+"use_external/path": "uid://b7n1i5gi2nipj"
+}
+}
+}
 gltf/naming_version=1
-gltf/embedded_image_handling=1
+gltf/embedded_image_handling=0
