@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c8qt6h77wb2ow" path="res://actors/obstacle/obstacle.gd" id="1_mgvnl"]
 [ext_resource type="Script" uid="uid://cykl2ulj4cbti" path="res://actors/obstacle/pole.gd" id="2_hh74y"]
-[ext_resource type="Texture2D" uid="uid://s4rg30o7ue6r" path="res://assets/icon.svg" id="3_io0e8"]
+[ext_resource type="Texture2D" uid="uid://cbvrdelry7au4" path="res://assets/textures/jumping_icon.png" id="3_io0e8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mgvnl"]
 size = Vector3(0.1, 2, 0.1)
