@@ -23,8 +23,9 @@ func handle_jump(jump_height: float, direction: Vector3):
 	activate_next_obstacle()
 
 
-func handle_crash():
-	activate_next_obstacle()
+func handle_crash(is_active: bool):
+	if is_active:
+		activate_next_obstacle()
 
 
 func activate_next_obstacle() -> void:

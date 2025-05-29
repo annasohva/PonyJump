@@ -94,7 +94,8 @@ func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
 
 func on_jumping_area_exited():
 	jump_landing_pos = Vector3.ZERO
-	current_obstacle = null
+	if (!is_jumping):
+		current_obstacle = null
 
 
 func calculate_jump_curve():
@@ -144,6 +145,8 @@ func _physics_process(delta: float) -> void:
 		
 		if (global_position - jump_curve.get_point_position(jump_curve.point_count-1)).length() < 0.1:
 			timer = 0
+			current_obstacle.current_status = Obstacle.StatusType.Landed
+			current_obstacle = null
 			jump_curve.clear_points()
 	else: # If not jumping, handle movement
 		# Add the gravity.

@@ -37,7 +37,6 @@ const INDICATOR_OFFSET: float = 0.2
 const PERFECT_RANGE: float = 0.3
 
 var current_status: StatusType = StatusType.Inactive
-var jumping_area_jumped_from: int = 0
 
 var indicator_max: float:
 	get:
@@ -109,51 +108,29 @@ func get_obstacle_height() -> float:
 
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		match current_status:
-			StatusType.Active:
-				EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
-				jumping_area_jumped_from = 1
-			StatusType.IsJumped:
-				if jumping_area_jumped_from == 2:
-					current_status == StatusType.Landed
+		if current_status == StatusType.Active:
+			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
 
 
 func _on_jumping_area_2_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		match current_status:
-			StatusType.Active:
-				EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
-				jumping_area_jumped_from = 2
-			StatusType.IsJumped:
-				if jumping_area_jumped_from == 1:
-					current_status == StatusType.Landed
+		if current_status == StatusType.Active:
+			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
 
 
-func _on_jumping_area_1_body_exited(body: Node3D) -> void:
+func _on_jumping_area_body_exited(body: Node3D) -> void:
 	if body is Horse:
 		EventSystem.OBS_jumping_area_exited.emit()
-		if current_status == StatusType.Landed && jumping_area_jumped_from == 2:
+		if current_status == StatusType.Landed:
 			current_status = StatusType.Inactive
-			jumping_area_jumped_from = 0
-
-
-func _on_jumping_area_2_body_exited(body: Node3D) -> void:
-	if body is Horse:
-		EventSystem.OBS_jumping_area_exited.emit()
-		if current_status == StatusType.Landed && jumping_area_jumped_from == 1:
-			current_status = StatusType.Inactive
-			jumping_area_jumped_from = 0
 
 
 func _on_obstacle_area_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		if current_status != StatusType.Inactive && current_status != StatusType.Active: return
-		
-		if current_status == StatusType.Active:
-			EventSystem.OBS_crash.emit()
-			get_tree().create_timer(3, false, true).timeout.connect(func(): height = 0)
-		
-		for pole in poles:
-			if pole.visible && !pole.is_dropped:
-				pole.crash(-body.transform.basis.z)
-				pole.is_dropped = true
+		print(current_status)
+		if current_status == StatusType.Inactive or current_status == StatusType.Active:
+			EventSystem.OBS_crash.emit(current_status == StatusType.Active)
+			for pole in poles:
+				if pole.visible && !pole.is_dropped:
+					pole.crash(-body.transform.basis.z)
+					pole.is_dropped = true
