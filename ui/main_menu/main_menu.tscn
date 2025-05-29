@@ -1,0 +1,144 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6st4rbcwvkv0"]
+
+[ext_resource type="Shader" uid="uid://dc5os084gj0fk" path="res://resources/shaders/texture_color_setter.gdshader" id="1_omy8q"]
+[ext_resource type="Texture2D" uid="uid://cbvrdelry7au4" path="res://assets/textures/jumping_icon.png" id="1_uhj5c"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_i5wg5"]
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="4_i5wg5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omy8q"]
+bg_color = Color(0.602806, 0.713701, 0.770912, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5wg5"]
+bg_color = Color(1, 0.901961, 0.8, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3c04x"]
+shader = ExtResource("1_omy8q")
+shader_parameter/tex_color = Color(1, 0.901961, 0.8, 1)
+shader_parameter/blend_amount = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_joh67"]
+font = ExtResource("3_i5wg5")
+font_size = 64
+font_color = Color(1, 0.900824, 0.799263, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.562502, 0.403815, 0.323838, 1)
+
+[node name="BluePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.05
+anchor_right = 0.975
+anchor_bottom = 0.95
+offset_left = -0.256001
+offset_top = 0.208
+offset_right = 0.407959
+offset_bottom = 0.271973
+theme_override_styles/panel = SubResource("StyleBoxFlat_omy8q")
+
+[node name="ButtonsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.5
+anchor_right = 0.65
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("StyleBoxFlat_i5wg5")
+
+[node name="IconTexture" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_3c04x")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.1
+anchor_right = 0.6
+anchor_bottom = 0.3
+offset_top = 0.151978
+offset_bottom = -0.152039
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uhj5c")
+stretch_mode = 3
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.325
+anchor_right = 0.7
+anchor_bottom = 0.45
+offset_left = 0.527985
+offset_top = -0.28801
+offset_right = -0.552063
+offset_bottom = 0.247986
+text = "Jump Pony"
+label_settings = SubResource("LabelSettings_joh67")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.55
+anchor_right = 0.6
+anchor_bottom = 0.85
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Play"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Options"
+
+[node name="Button3" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Credits"
+
+[node name="Button4" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Quit"
