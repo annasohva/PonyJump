@@ -35,7 +35,7 @@ ambient_light_color = Color(0, 0.212775, 0.351839, 1)
 ambient_light_sky_contribution = 0.4
 reflected_light_source = 2
 tonemap_mode = 3
-tonemap_exposure = 1.2
+tonemap_exposure = 1.15
 tonemap_white = 0.5
 glow_enabled = true
 fog_mode = 1
@@ -44,7 +44,7 @@ fog_density = 0.0737
 fog_depth_curve = 1.7411
 fog_depth_begin = 0.0
 adjustment_enabled = true
-adjustment_saturation = 0.75
+adjustment_saturation = 0.8
 
 [node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
 script = ExtResource("1_suqwx")
@@ -70,32 +70,32 @@ skeleton = NodePath("../..")
 
 [node name="WorldBoundary1" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -30, 0, 0)
-collision_layer = 7
-collision_mask = 7
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary1"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="WorldBoundary2" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 30, 0, 0)
-collision_layer = 7
-collision_mask = 7
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary2"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="WorldBoundary3" type="StaticBody3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, -60)
-collision_layer = 7
-collision_mask = 7
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary3"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="WorldBoundary4" type="StaticBody3D" parent="."]
 transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0, 0, 60)
-collision_layer = 7
-collision_mask = 7
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary4"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
