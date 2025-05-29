@@ -10,12 +10,22 @@ class_name Obstacle extends Node3D
 		for i in poles.size():
 			poles[i].visible = true if i < value else false
 		height = value
+@export_range(1,2) var jumping_area: int = 1:
+	get:
+		return jumping_area
+	set(value):
+		jumping_area = value
+		jumping_area_1_indicator.visible = value == 1
+		jumping_area_2_indicator.visible = value == 2
 
 @export_category("Node references")
 @export var indicator: Sprite3D
 @export var poles: Array[Pole]
 @export var landing_pos1: Marker3D
 @export var landing_pos2: Marker3D
+@export var jumping_area_1_indicator: MeshInstance3D
+@export var jumping_area_2_indicator: MeshInstance3D
+
 
 enum IndicatorPosition
 {
@@ -67,6 +77,11 @@ var indicator_value: float:
 				indicator.modulate = Color.SLATE_GRAY
 
 
+func _ready() -> void:
+	jumping_area_1_indicator.visible = false
+	jumping_area_2_indicator.visible = false
+
+
 func handle_jump(jump_height: float, direction: Vector3) -> void:
 	# Setting status being jumped
 	current_status = StatusType.IsJumped
@@ -89,6 +104,10 @@ func set_activate(activate: bool) -> void:
 	indicator.visible = activate
 	if activate:
 		current_status = StatusType.Active
+		jumping_area = jumping_area
+	else:
+		jumping_area_1_indicator.visible = false
+		jumping_area_2_indicator.visible = false
 
 
 func get_indicator_position() -> IndicatorPosition:

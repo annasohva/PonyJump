@@ -1,14 +1,27 @@
-[gd_scene load_steps=11 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=17 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
 [ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
 [ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
+[ext_resource type="Texture2D" uid="uid://u5tbuwi1c6km" path="res://assets/textures/ground/Dirt_01.png" id="2_r32hi"]
+[ext_resource type="Texture2D" uid="uid://bta73fvb8u0gg" path="res://assets/textures/ground/Dirt_01_Nrm.png" id="3_wc24h"]
 [ext_resource type="PackedScene" uid="uid://d3siooyjb25cw" path="res://assets/models/fence/wooden_fence_extension_2.gltf" id="5_yfumg"]
+[ext_resource type="Texture2D" uid="uid://dq1e0q6gmh7ip" path="res://assets/textures/ground/Grass_01.png" id="7_4p0hh"]
+[ext_resource type="Texture2D" uid="uid://cowwyfx0a7chy" path="res://assets/textures/ground/Grass_01_Nrm.png" id="8_r0i7e"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cfbto"]
-albedo_color = Color(0.206106, 0.148485, 0.0736262, 1)
+disable_ambient_light = true
+albedo_color = Color(0.775639, 0.795044, 0.935098, 1)
+albedo_texture = ExtResource("2_r32hi")
+metallic_specular = 0.0
+normal_enabled = true
+normal_scale = -1.0
+normal_texture = ExtResource("3_wc24h")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7a7xo"]
 material = SubResource("StandardMaterial3D_cfbto")
@@ -35,6 +48,22 @@ fog_light_color = Color(0.468534, 0.545935, 0.73716, 1)
 fog_density = 0.0737
 fog_depth_curve = 1.7411
 fog_depth_begin = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0aflx"]
+disable_ambient_light = true
+albedo_color = Color(0.867476, 0.816944, 0.906187, 1)
+albedo_texture = ExtResource("7_4p0hh")
+metallic_specular = 0.0
+normal_enabled = true
+normal_scale = -1.0
+normal_texture = ExtResource("8_r0i7e")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w02bw"]
+material = SubResource("StandardMaterial3D_0aflx")
+size = Vector2(600, 1200)
 
 [node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
 script = ExtResource("1_suqwx")
@@ -88,6 +117,7 @@ shape = SubResource("WorldBoundaryShape3D_7a7xo")
 transform = Transform3D(1, 0, 0, 0, 0.313313, 0.94965, 0, -0.94965, 0.313313, 0, 47.0768, 37.923)
 light_color = Color(0.941176, 0.941176, 0.87451, 1)
 shadow_enabled = true
+shadow_opacity = 0.75
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eg61u")
@@ -98,32 +128,40 @@ transform = Transform3D(-0.655268, 0, -0.755396, 0, 1, 0, 0.755396, 0, -0.655268
 [node name="Obstacle" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.673606, 0, 0.739091, 0, 1, 0, -0.739091, 0, 0.673606, -11.0302, -4.76837e-07, -35.373)
 height = 3
+jumping_area = 2
 
 [node name="Obstacle2" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.092)
 height = 1
+jumping_area = 2
 
 [node name="Obstacle3" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0, -10)
 height = 2
+jumping_area = 2
 
 [node name="Obstacle4" parent="." instance=ExtResource("2_eg61u")]
 height = 3
+jumping_area = 2
 
 [node name="Obstacle5" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.721905, 0, -0.691992, 0, 1, 0, 0.691992, 0, 0.721905, -12.4496, -4.76837e-07, 12.5224)
 height = 4
+jumping_area = 2
 
 [node name="Obstacle6" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6652, -4.76837e-07, 36.1097)
+jumping_area = 2
 
 [node name="Obstacle7" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.00773167, 0, 0.99997, 0, 1, 0, -0.99997, 0, 0.00773167, -10, 0, 47.83)
 height = 3
+jumping_area = 2
 
 [node name="Obstacle8" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.00773167, 0, 0.99997, 0, 1, 0, -0.99997, 0, 0.00773167, 0, 0, 47.83)
 height = 3
+jumping_area = 2
 
 [node name="Obstacle9" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.527771, 0, -0.849386, 0, 1, 0, 0.849386, 0, 0.527771, 13.0704, 0, 41.0135)
@@ -411,3 +449,9 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703,
 
 [node name="wooden_fence_extension90" parent="Fences" instance=ExtResource("5_yfumg")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -57.6571)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_w02bw")
+skeleton = NodePath("../..")

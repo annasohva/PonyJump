@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgq4i734dmumc"]
+[gd_scene load_steps=15 format=3 uid="uid://bgq4i734dmumc"]
 
 [ext_resource type="Script" uid="uid://c8qt6h77wb2ow" path="res://actors/obstacle/obstacle.gd" id="1_mgvnl"]
 [ext_resource type="Script" uid="uid://cykl2ulj4cbti" path="res://actors/obstacle/pole.gd" id="2_hh74y"]
@@ -39,12 +39,25 @@ size = Vector3(4, 1, 2.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_drcfa"]
 size = Vector3(4, 2, 0.1)
 
-[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "landing_pos1", "landing_pos2")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io0e8"]
+blend_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(0.0367557, 0, 0.997826, 0.529412)
+
+[sub_resource type="QuadMesh" id="QuadMesh_drcfa"]
+material = SubResource("StandardMaterial3D_io0e8")
+size = Vector2(4, 2.5)
+orientation = 1
+
+[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "landing_pos1", "landing_pos2", "jumping_area_1_indicator", "jumping_area_2_indicator")]
 script = ExtResource("1_mgvnl")
 indicator = NodePath("Indicator")
 poles = [NodePath("Pole1"), NodePath("Pole2"), NodePath("Pole3"), NodePath("Pole4"), NodePath("Pole5")]
 landing_pos1 = NodePath("LandingPos1")
 landing_pos2 = NodePath("LandingPos2")
+jumping_area_1_indicator = NodePath("JumpingArea1Indicator")
+jumping_area_2_indicator = NodePath("JumpingArea2Indicator")
 
 [node name="SidePole1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
@@ -174,6 +187,15 @@ collision_layer = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_drcfa")
+
+[node name="JumpingArea1Indicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.75)
+mesh = SubResource("QuadMesh_drcfa")
+
+[node name="JumpingArea2Indicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -1.75)
+visible = false
+mesh = SubResource("QuadMesh_drcfa")
 
 [connection signal="body_entered" from="JumpingArea1" to="." method="_on_jumping_area_1_body_entered"]
 [connection signal="body_exited" from="JumpingArea1" to="." method="_on_jumping_area_body_exited"]
