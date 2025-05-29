@@ -77,9 +77,10 @@ var indicator_value: float:
 				indicator.modulate = Color.SLATE_GRAY
 
 
-func _ready() -> void:
-	jumping_area_1_indicator.visible = false
-	jumping_area_2_indicator.visible = false
+func _enter_tree() -> void:
+	if (current_status != StatusType.Active):
+		jumping_area_1_indicator.visible = false
+		jumping_area_2_indicator.visible = false
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:

@@ -40,11 +40,8 @@ var camera_rotation: Vector2 = Vector2.ZERO
 var jump_landing_pos: Vector3 = Vector3.ZERO
 
 
-func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-
 func _enter_tree() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 
@@ -64,6 +61,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("backward"):
 		current_gait = clamp(current_gait - 1, Gaits.Back, Gaits.Gallop)
 		adjust_speed()
+	
+	if event is InputEventMouseButton and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func adjust_speed():
