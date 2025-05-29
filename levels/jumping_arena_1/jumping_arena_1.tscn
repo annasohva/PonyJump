@@ -1,73 +1,60 @@
-[gd_scene load_steps=17 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=13 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
 [ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
 [ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
-[ext_resource type="Texture2D" uid="uid://u5tbuwi1c6km" path="res://assets/textures/ground/Dirt_01.png" id="2_r32hi"]
-[ext_resource type="Texture2D" uid="uid://bta73fvb8u0gg" path="res://assets/textures/ground/Dirt_01_Nrm.png" id="3_wc24h"]
+[ext_resource type="Material" uid="uid://bua56o2ki6uwi" path="res://assets/materials/ground/dirt.tres" id="2_gtow3"]
 [ext_resource type="PackedScene" uid="uid://d3siooyjb25cw" path="res://assets/models/fence/wooden_fence_extension_2.gltf" id="5_yfumg"]
-[ext_resource type="Texture2D" uid="uid://dq1e0q6gmh7ip" path="res://assets/textures/ground/Grass_01.png" id="7_4p0hh"]
-[ext_resource type="Texture2D" uid="uid://cowwyfx0a7chy" path="res://assets/textures/ground/Grass_01_Nrm.png" id="8_r0i7e"]
+[ext_resource type="Material" uid="uid://b6gq1jmunbs1p" path="res://assets/materials/ground/forest_floor.tres" id="6_idgeb"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w02bw"]
+material = ExtResource("6_idgeb")
+size = Vector2(600, 1200)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cfbto"]
-disable_ambient_light = true
-albedo_color = Color(0.775639, 0.795044, 0.935098, 1)
-albedo_texture = ExtResource("2_r32hi")
-metallic_specular = 0.0
-normal_enabled = true
-normal_scale = -1.0
-normal_texture = ExtResource("3_wc24h")
-uv1_scale = Vector3(0.25, 0.25, 0.25)
-uv1_triplanar = true
-uv1_world_triplanar = true
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_7a7xo"]
-material = SubResource("StandardMaterial3D_cfbto")
+material = ExtResource("2_gtow3")
 size = Vector2(60, 120)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cfbto"]
-sky_top_color = Color(0.395375, 0.448153, 0.562972, 1)
-sky_horizon_color = Color(0.60411, 0.658577, 0.750906, 1)
-ground_bottom_color = Color(0.0235924, 0.210379, 0.137841, 1)
+sky_top_color = Color(0.158733, 0.456667, 0.754579, 1)
+sky_horizon_color = Color(0.411478, 0.700862, 0.811391, 1)
+ground_bottom_color = Color(0.524186, 0.791419, 0.512353, 1)
+ground_horizon_color = Color(0.399457, 0.700953, 0.824598, 1)
 
 [sub_resource type="Sky" id="Sky_7a7xo"]
 sky_material = SubResource("ProceduralSkyMaterial_cfbto")
+radiance_size = 1
 
 [sub_resource type="Environment" id="Environment_eg61u"]
 background_mode = 2
 sky = SubResource("Sky_7a7xo")
 ambient_light_source = 3
-ambient_light_color = Color(0.611868, 0.534894, 0.819852, 1)
+ambient_light_color = Color(0, 0.212775, 0.351839, 1)
+ambient_light_sky_contribution = 0.4
 reflected_light_source = 2
-tonemap_mode = 2
+tonemap_mode = 3
+tonemap_white = 0.83
 glow_enabled = true
 fog_mode = 1
 fog_light_color = Color(0.468534, 0.545935, 0.73716, 1)
 fog_density = 0.0737
 fog_depth_curve = 1.7411
 fog_depth_begin = 0.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0aflx"]
-disable_ambient_light = true
-albedo_color = Color(0.867476, 0.816944, 0.906187, 1)
-albedo_texture = ExtResource("7_4p0hh")
-metallic_specular = 0.0
-normal_enabled = true
-normal_scale = -1.0
-normal_texture = ExtResource("8_r0i7e")
-uv1_scale = Vector3(0.25, 0.25, 0.25)
-uv1_triplanar = true
-uv1_world_triplanar = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_w02bw"]
-material = SubResource("StandardMaterial3D_0aflx")
-size = Vector2(600, 1200)
+adjustment_enabled = true
+adjustment_contrast = 0.92
+adjustment_saturation = 0.75
 
 [node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
 script = ExtResource("1_suqwx")
 obstacles = [NodePath("Obstacle"), NodePath("Obstacle2"), NodePath("Obstacle3"), NodePath("Obstacle4"), NodePath("Obstacle5"), NodePath("Obstacle6"), NodePath("Obstacle7"), NodePath("Obstacle8"), NodePath("Obstacle9"), NodePath("Obstacle10"), NodePath("Obstacle11"), NodePath("Obstacle12")]
+
+[node name="ForestGround" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+layers = 7
+mesh = SubResource("PlaneMesh_w02bw")
+skeleton = NodePath("../..")
 
 [node name="ArenaGround" type="StaticBody3D" parent="."]
 collision_layer = 7
@@ -115,15 +102,16 @@ shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.313313, 0.94965, 0, -0.94965, 0.313313, 0, 47.0768, 37.923)
-light_color = Color(0.941176, 0.941176, 0.87451, 1)
+light_color = Color(0.975327, 0.937217, 0.795395, 1)
 shadow_enabled = true
 shadow_opacity = 0.75
+directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_eg61u")
 
 [node name="Horse" parent="." instance=ExtResource("1_7a7xo")]
-transform = Transform3D(-0.655268, 0, -0.755396, 0, 1, 0, 0.755396, 0, -0.655268, -21.5921, 0, -44.6429)
+transform = Transform3D(-0.655268, 0, -0.755396, 0, 1, 0, 0.755396, 0, -0.655268, 28.4079, 0, -47.6429)
 
 [node name="Obstacle" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.673606, 0, 0.739091, 0, 1, 0, -0.739091, 0, 0.673606, -11.0302, -4.76837e-07, -35.373)
@@ -449,9 +437,3 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703,
 
 [node name="wooden_fence_extension90" parent="Fences" instance=ExtResource("5_yfumg")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -57.6571)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-layers = 7
-mesh = SubResource("PlaneMesh_w02bw")
-skeleton = NodePath("../..")

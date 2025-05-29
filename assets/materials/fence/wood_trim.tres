@@ -3,6 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://cg3hwtfgbqqgo" path="res://assets/textures/fence/wood_trim_base_color.png" id="1_g53j2"]
 
 [resource]
-albedo_color = Color(0.603248, 0.603248, 0.603248, 1)
+shading_mode = 2
+specular_mode = 1
 albedo_texture = ExtResource("1_g53j2")
-normal_enabled = true

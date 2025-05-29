@@ -40,10 +40,12 @@ size = Vector3(4, 1, 2.5)
 size = Vector3(4, 2, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io0e8"]
-blend_mode = 1
+transparency = 1
 shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
 disable_ambient_light = true
-albedo_color = Color(0.0367557, 0, 0.997826, 0.529412)
+albedo_color = Color(2.88785e-06, 0.560246, 0.89442, 0.529412)
 
 [sub_resource type="QuadMesh" id="QuadMesh_drcfa"]
 material = SubResource("StandardMaterial3D_io0e8")
@@ -190,6 +192,7 @@ shape = SubResource("BoxShape3D_drcfa")
 
 [node name="JumpingArea1Indicator" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 1.75)
+visible = false
 mesh = SubResource("QuadMesh_drcfa")
 
 [node name="JumpingArea2Indicator" type="MeshInstance3D" parent="."]

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bua56o2ki6uwi"]
+
+[ext_resource type="Texture2D" uid="uid://u5tbuwi1c6km" path="res://assets/textures/ground/Dirt_01.png" id="1_juxxx"]
+
+[resource]
+shading_mode = 2
+specular_mode = 2
+albedo_color = Color(0.918536, 0.860238, 0.810353, 1)
+albedo_texture = ExtResource("1_juxxx")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
