@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=11 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
 [ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
 [ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
+[ext_resource type="PackedScene" uid="uid://d3siooyjb25cw" path="res://assets/models/fence/wooden_fence_extension_2.gltf" id="5_yfumg"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7a7xo"]
 
@@ -39,17 +40,49 @@ fog_depth_begin = 0.0
 script = ExtResource("1_suqwx")
 obstacles = [NodePath("Obstacle"), NodePath("Obstacle2"), NodePath("Obstacle3"), NodePath("Obstacle4"), NodePath("Obstacle5"), NodePath("Obstacle6"), NodePath("Obstacle7"), NodePath("Obstacle8"), NodePath("Obstacle9"), NodePath("Obstacle10"), NodePath("Obstacle11"), NodePath("Obstacle12")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="ArenaGround" type="StaticBody3D" parent="."]
 collision_layer = 7
 collision_mask = 7
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaGround"]
 shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ArenaGround"]
 layers = 7
 mesh = SubResource("PlaneMesh_7a7xo")
 skeleton = NodePath("../..")
+
+[node name="WorldBoundary1" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -30, 0, 0)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary1"]
+shape = SubResource("WorldBoundaryShape3D_7a7xo")
+
+[node name="WorldBoundary2" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 30, 0, 0)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary2"]
+shape = SubResource("WorldBoundaryShape3D_7a7xo")
+
+[node name="WorldBoundary3" type="StaticBody3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, -60)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary3"]
+shape = SubResource("WorldBoundaryShape3D_7a7xo")
+
+[node name="WorldBoundary4" type="StaticBody3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0, 0, 60)
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary4"]
+shape = SubResource("WorldBoundaryShape3D_7a7xo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.313313, 0.94965, 0, -0.94965, 0.313313, 0, 47.0768, 37.923)
@@ -106,3 +139,275 @@ height = 1
 [node name="Obstacle12" parent="." instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 10)
 height = 1
+
+[node name="Fences" type="Node3D" parent="."]
+
+[node name="wooden_fence_extension" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.9742, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension2" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.9742, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension3" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9742, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension4" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9742, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension5" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9742, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension6" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.97422, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension7" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.97422, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension8" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0257788, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension9" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.02578, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension10" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.02578, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension11" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0258, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension12" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0258, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension13" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0258, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension14" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0258, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension15" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.0258, 0.0282525, -59.7024)
+
+[node name="wooden_fence_extension16" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.0258, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension17" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -24.0258, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension18" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -20.0258, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension19" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -16.0258, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension20" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -12.0258, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension21" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -8.02578, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension22" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.02578, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension23" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0257807, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension24" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.97422, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension25" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 7.97422, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension26" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 11.9742, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension27" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 15.9742, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension28" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 19.9742, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension29" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 23.9742, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension30" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 27.9742, 0.0282525, 59.8782)
+
+[node name="wooden_fence_extension31" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -57.6571)
+
+[node name="wooden_fence_extension32" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -53.6571)
+
+[node name="wooden_fence_extension33" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -49.6571)
+
+[node name="wooden_fence_extension34" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -45.6571)
+
+[node name="wooden_fence_extension35" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -41.6571)
+
+[node name="wooden_fence_extension36" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -37.6571)
+
+[node name="wooden_fence_extension37" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -33.6571)
+
+[node name="wooden_fence_extension38" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -29.6571)
+
+[node name="wooden_fence_extension39" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -25.6571)
+
+[node name="wooden_fence_extension40" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -21.6571)
+
+[node name="wooden_fence_extension41" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -17.6571)
+
+[node name="wooden_fence_extension42" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -13.6571)
+
+[node name="wooden_fence_extension43" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -9.65705)
+
+[node name="wooden_fence_extension44" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -5.65705)
+
+[node name="wooden_fence_extension45" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, -1.65705)
+
+[node name="wooden_fence_extension46" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 1.94296)
+
+[node name="wooden_fence_extension47" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 5.94296)
+
+[node name="wooden_fence_extension48" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 9.94296)
+
+[node name="wooden_fence_extension49" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 13.943)
+
+[node name="wooden_fence_extension50" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 17.943)
+
+[node name="wooden_fence_extension51" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 21.943)
+
+[node name="wooden_fence_extension52" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 25.943)
+
+[node name="wooden_fence_extension53" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 29.943)
+
+[node name="wooden_fence_extension54" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 33.943)
+
+[node name="wooden_fence_extension55" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 37.943)
+
+[node name="wooden_fence_extension56" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 41.943)
+
+[node name="wooden_fence_extension57" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 45.943)
+
+[node name="wooden_fence_extension58" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 49.943)
+
+[node name="wooden_fence_extension59" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 53.943)
+
+[node name="wooden_fence_extension60" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -29.8807, 0.0282525, 57.943)
+
+[node name="wooden_fence_extension61" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 57.943)
+
+[node name="wooden_fence_extension62" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 53.943)
+
+[node name="wooden_fence_extension63" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 49.943)
+
+[node name="wooden_fence_extension64" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 45.943)
+
+[node name="wooden_fence_extension65" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 41.943)
+
+[node name="wooden_fence_extension66" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 37.943)
+
+[node name="wooden_fence_extension67" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 33.943)
+
+[node name="wooden_fence_extension68" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 29.943)
+
+[node name="wooden_fence_extension69" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 25.943)
+
+[node name="wooden_fence_extension70" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 21.943)
+
+[node name="wooden_fence_extension71" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 17.943)
+
+[node name="wooden_fence_extension72" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 13.943)
+
+[node name="wooden_fence_extension73" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 9.94297)
+
+[node name="wooden_fence_extension74" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 5.94297)
+
+[node name="wooden_fence_extension75" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, 1.94297)
+
+[node name="wooden_fence_extension76" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -1.65705)
+
+[node name="wooden_fence_extension77" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -5.65705)
+
+[node name="wooden_fence_extension78" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -9.65705)
+
+[node name="wooden_fence_extension79" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -13.657)
+
+[node name="wooden_fence_extension80" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -17.657)
+
+[node name="wooden_fence_extension81" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -21.657)
+
+[node name="wooden_fence_extension82" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -25.657)
+
+[node name="wooden_fence_extension83" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -29.657)
+
+[node name="wooden_fence_extension84" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -33.6571)
+
+[node name="wooden_fence_extension85" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -37.6571)
+
+[node name="wooden_fence_extension86" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -41.6571)
+
+[node name="wooden_fence_extension87" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -45.6571)
+
+[node name="wooden_fence_extension88" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -49.6571)
+
+[node name="wooden_fence_extension89" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -53.6571)
+
+[node name="wooden_fence_extension90" parent="Fences" instance=ExtResource("5_yfumg")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -57.6571)
