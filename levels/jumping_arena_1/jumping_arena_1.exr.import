@@ -1,0 +1,27 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://cu4c7lrftv738"
+path.bptc="res://.godot/imported/jumping_arena_1.exr-ab253aa804705ecfae4830532f4e6799.bptc.ctexarray"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://levels/jumping_arena_1/jumping_arena_1.exr"
+dest_files=["res://.godot/imported/jumping_arena_1.exr-ab253aa804705ecfae4830532f4e6799.bptc.ctexarray"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=1
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical=16
