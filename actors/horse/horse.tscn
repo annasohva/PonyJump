@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dctqvp1pympjo"]
+[gd_scene load_steps=12 format=4 uid="uid://dctqvp1pympjo"]
 
 [ext_resource type="Script" uid="uid://biysub7v25qus" path="res://actors/horse/horse.gd" id="1_nvxhs"]
 [ext_resource type="Texture2D" uid="uid://c3pge1fdfihk5" path="res://assets/textures/pony/pony_coat.png" id="2_5qeg8"]
@@ -84,11 +84,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch54x")
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qeg8"]
+
 [node name="Horse" type="CharacterBody3D"]
 script = ExtResource("1_nvxhs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.47364, 0.138783)
+shape = SubResource("CapsuleShape3D_nvxhs")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0.150262)
+shape = SubResource("CapsuleShape3D_nvxhs")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.663247, 0.7484, 0, -0.7484, 0.663247, 0, 1.83952, -0.964382)
 shape = SubResource("CapsuleShape3D_nvxhs")
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -120,3 +130,11 @@ skeleton = NodePath("")
 [node name="Eyes" type="MeshInstance3D" parent="pony"]
 mesh = SubResource("ArrayMesh_u0c5u")
 skeleton = NodePath("")
+
+[node name="ObstacleCrashArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleCrashArea"]
+shape = SubResource("CapsuleShape3D_5qeg8")
