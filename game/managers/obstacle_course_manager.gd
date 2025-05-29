@@ -5,7 +5,7 @@ extends Node
 
 var current_obstacle: int = 0
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	EventSystem.OBS_charge_jump.connect(charge_jump)
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)

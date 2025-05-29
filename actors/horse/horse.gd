@@ -22,7 +22,7 @@ var jump_charge: float = 0
 
 const TURNING_SPEED := 3
 const CAMERA_SPEED := 0.8
-const JUMP_CHARGE_SPEED := 4
+const JUMP_CHARGE_SPEED := 5
 const JUMP_VELOCITY := 2
 const JUMP_HEIGHT_OFFSET := 0.4
 
@@ -45,11 +45,6 @@ func _ready() -> void:
 
 
 func _enter_tree() -> void:
-	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
-	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
-
-
-func _exit_tree() -> void:
 	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 

@@ -48,7 +48,7 @@ adjustment_saturation = 0.75
 
 [node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
 script = ExtResource("1_suqwx")
-obstacles = [NodePath("Obstacle"), NodePath("Obstacle2"), NodePath("Obstacle3"), NodePath("Obstacle4"), NodePath("Obstacle5"), NodePath("Obstacle6"), NodePath("Obstacle7"), NodePath("Obstacle8"), NodePath("Obstacle9"), NodePath("Obstacle10"), NodePath("Obstacle11"), NodePath("Obstacle12")]
+obstacles = [NodePath("Obstacles/Obstacle"), NodePath("Obstacles/Obstacle2"), NodePath("Obstacles/Obstacle3"), NodePath("Obstacles/Obstacle4"), NodePath("Obstacles/Obstacle5"), NodePath("Obstacles/Obstacle6"), NodePath("Obstacles/Obstacle7"), NodePath("Obstacles/Obstacle8"), NodePath("Obstacles/Obstacle9"), NodePath("Obstacles/Obstacle10"), NodePath("Obstacles/Obstacle11"), NodePath("Obstacles/Obstacle12"), NodePath("Obstacles/Obstacle13"), NodePath("Obstacles/Obstacle14"), NodePath("Obstacles/Obstacle15"), NodePath("Obstacles/Obstacle16"), NodePath("Obstacles/Obstacle17"), NodePath("Obstacles/Obstacle18"), NodePath("Obstacles/Obstacle19")]
 
 [node name="ForestGround" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
@@ -111,60 +111,88 @@ directional_shadow_mode = 0
 environment = SubResource("Environment_eg61u")
 
 [node name="Horse" parent="." instance=ExtResource("1_7a7xo")]
-transform = Transform3D(-0.655268, 0, -0.755396, 0, 1, 0, 0.755396, 0, -0.655268, 28.4079, 0, -47.6429)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.4079, 0, -56.6429)
 
-[node name="Obstacle" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Obstacle" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.673606, 0, 0.739091, 0, 1, 0, -0.739091, 0, 0.673606, -11.0302, -4.76837e-07, -35.373)
 height = 3
 jumping_area = 2
 
-[node name="Obstacle2" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle2" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.092)
 height = 1
 jumping_area = 2
 
-[node name="Obstacle3" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle3" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044, 0, -10)
 height = 2
 jumping_area = 2
 
-[node name="Obstacle4" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle4" parent="Obstacles" instance=ExtResource("2_eg61u")]
 height = 3
 jumping_area = 2
 
-[node name="Obstacle5" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle5" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.721905, 0, -0.691992, 0, 1, 0, 0.691992, 0, 0.721905, -12.4496, -4.76837e-07, 12.5224)
 height = 4
 jumping_area = 2
 
-[node name="Obstacle6" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle6" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6652, -4.76837e-07, 36.1097)
 jumping_area = 2
 
-[node name="Obstacle7" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle7" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.00773167, 0, 0.99997, 0, 1, 0, -0.99997, 0, 0.00773167, -10, 0, 47.83)
 height = 3
 jumping_area = 2
 
-[node name="Obstacle8" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle8" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.00773167, 0, 0.99997, 0, 1, 0, -0.99997, 0, 0.00773167, 0, 0, 47.83)
 height = 3
 jumping_area = 2
 
-[node name="Obstacle9" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle9" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(0.527771, 0, -0.849386, 0, 1, 0, 0.849386, 0, 0.527771, 13.0704, 0, 41.0135)
 
-[node name="Obstacle10" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle10" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 25)
 height = 1
 
-[node name="Obstacle11" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle11" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 17.5)
 height = 1
 
-[node name="Obstacle12" parent="." instance=ExtResource("2_eg61u")]
+[node name="Obstacle12" parent="Obstacles" instance=ExtResource("2_eg61u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 10)
 height = 1
+
+[node name="Obstacle13" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 13, 0, -2)
+height = 2
+
+[node name="Obstacle14" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, -9, 0, -7)
+height = 3
+
+[node name="Obstacle15" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, -22, 0, -26)
+
+[node name="Obstacle16" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -15, 0, -46)
+height = 3
+
+[node name="Obstacle17" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(8.9407e-08, 0, -1, 0, 1, 0, 1, 0, 8.9407e-08, 7, 0, -50)
+
+[node name="Obstacle18" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(-1, 0, -4.56956e-08, 0, 1, 0, 4.56956e-08, 0, -1, 19, 0, -35)
+height = 4
+
+[node name="Obstacle19" parent="Obstacles" instance=ExtResource("2_eg61u")]
+transform = Transform3D(-1, 0, -4.56956e-08, 0, 1, 0, 4.56956e-08, 0, -1, 19, 0, -18)
+height = 4
 
 [node name="Fences" type="Node3D" parent="."]
 
