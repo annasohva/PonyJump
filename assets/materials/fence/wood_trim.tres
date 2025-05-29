@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dtys31s0a00s3"]
+
+[ext_resource type="Texture2D" uid="uid://cg3hwtfgbqqgo" path="res://assets/textures/fence/wood_trim_base_color.png" id="1_g53j2"]
+
+[resource]
+albedo_color = Color(0.603248, 0.603248, 0.603248, 1)
+albedo_texture = ExtResource("1_g53j2")
+normal_enabled = true
