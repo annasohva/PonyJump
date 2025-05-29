@@ -81,7 +81,7 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 				pole.is_dropped = true
 	
 	# Updating the obstacle height after 3 sec to hide dropped poles
-	if poles_dropped > 0: get_tree().create_timer(3, false, true).timeout.connect(func(): height -= poles_dropped)
+	if poles_dropped > 0: adjust_height_after_delay(height - poles_dropped, 3)
 
 
 func set_activate(activate: bool) -> void:
@@ -106,6 +106,10 @@ func get_obstacle_height() -> float:
 	return poles[height-1].position.y
 
 
+func adjust_height_after_delay(new_height: int, delay: float):
+	get_tree().create_timer(delay, false, true).timeout.connect(func(): height = new_height)
+
+
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
 	if body is Horse:
 		if current_status == StatusType.Active:
@@ -125,12 +129,15 @@ func _on_jumping_area_body_exited(body: Node3D) -> void:
 			current_status = StatusType.Inactive
 
 
-func _on_obstacle_area_body_entered(body: Node3D) -> void:
-	if body is Horse:
-		print(current_status)
+func _on_obstacle_area_entered(area: Area3D) -> void:
+	var area_parent = area.get_parent()
+	if area.get_parent() is Horse:
 		if current_status == StatusType.Inactive or current_status == StatusType.Active:
 			EventSystem.OBS_crash.emit(current_status == StatusType.Active)
+			
 			for pole in poles:
 				if pole.visible && !pole.is_dropped:
-					pole.crash(-body.transform.basis.z)
+					pole.crash(-area_parent.transform.basis.z)
 					pole.is_dropped = true
+			
+			adjust_height_after_delay(0, 3)
