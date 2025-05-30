@@ -13,7 +13,6 @@ func _enter_tree() -> void:
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)
 	EventSystem.OBS_restart_course.connect(restart_course)
-	obstacles[current_obstacle].set_activate(true)
 
 
 func _ready() -> void:
@@ -22,6 +21,10 @@ func _ready() -> void:
 
 func start_course():
 	horse.set_starting_pos(start_pos.global_position, start_pos.global_rotation)
+	if current_obstacle != 0:
+		obstacles[current_obstacle].set_activate(false)
+		current_obstacle = 0
+	obstacles[current_obstacle].set_activate(true)
 
 
 func restart_course():

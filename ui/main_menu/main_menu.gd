@@ -4,11 +4,6 @@ extends Control
 @onready var quit_button: Button = $ButtonsPanel/VBoxContainer/QuitButton
 
 
-func _enter_tree():
-	if OS.get_name() == "HTML5":
-		quit_button.visible = false
-
-
 func _on_play_button_pressed() -> void:
 	EventSystem.LEV_change_level.emit(LevelReference.Keys.JumpingArena1)
 

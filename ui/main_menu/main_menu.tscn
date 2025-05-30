@@ -109,6 +109,7 @@ theme = ExtResource("4_i5wg5")
 text = "Credits"
 
 [node name="QuitButton" type="Button" parent="ButtonsPanel/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("4_i5wg5")
