@@ -168,6 +168,7 @@ func _physics_process(delta: float) -> void:
 			current_obstacle = null
 			is_just_landed = true
 			jump_curve.clear_points()
+	
 	else: # If not jumping, handle movement
 		# Add the gravity.
 		if not is_on_floor():

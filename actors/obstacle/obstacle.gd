@@ -27,6 +27,7 @@ class_name Obstacle extends Node3D
 @export var jumping_area_2_indicator: MeshInstance3D
 @export var obstacle_area: Area3D
 
+@onready var timer: Timer = Timer.new()
 
 enum IndicatorPosition
 {
@@ -69,6 +70,9 @@ var indicator_value: float:
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
 
+var new_height: int = -1
+var original_height: int
+
 
 func _enter_tree() -> void:
 	# If in editor setting jumping area indicators visible if the chosen jumping area matches
@@ -80,6 +84,14 @@ func _enter_tree() -> void:
 	# If in game setting jumping area indicators active according to active status and if the chosen jumping area matches
 	jumping_area_1_indicator.visible = is_active && jumping_area == 1
 	jumping_area_2_indicator.visible = is_active && jumping_area == 2
+	
+	# Saving the original height in case the obstacle needs to be reset
+	original_height = height
+
+
+func _ready() -> void:
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:
@@ -93,7 +105,9 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 				pole.is_dropped = true
 	
 	# Updating the obstacle height after 3 sec to hide dropped poles
-	if poles_dropped > 0: adjust_height_after_delay(height - poles_dropped, 3)
+	if poles_dropped > 0:
+		adjust_height_after_delay(3)
+		new_height = height - poles_dropped
 
 
 func set_activate(activate: bool) -> void:
@@ -107,7 +121,11 @@ func set_activate(activate: bool) -> void:
 
 
 func reset():
-	pass
+	for pole in poles:
+		pole.reset()
+	height = original_height
+	new_height = -1
+	if !timer.is_stopped(): timer.stop()
 
 
 func get_indicator_position() -> IndicatorPosition:
@@ -127,8 +145,14 @@ func get_obstacle_height() -> float:
 	return poles[height-1].position.y
 
 
-func adjust_height_after_delay(new_height: int, delay: float):
-	get_tree().create_timer(delay, false, true).timeout.connect(func(): height = new_height)
+func adjust_height_after_delay(delay: float):
+	if timer.is_stopped():
+		timer.start(delay)
+
+
+func _on_timer_timeout() -> void:
+	if (new_height != -1): height = new_height
+	new_height = -1
 
 
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
@@ -160,4 +184,5 @@ func _on_obstacle_area_entered(area: Area3D) -> void:
 				pole.crash(-area_parent.transform.basis.z)
 				pole.is_dropped = true
 		
-		adjust_height_after_delay(0, 3)
+		adjust_height_after_delay(3)
+		new_height = 0
