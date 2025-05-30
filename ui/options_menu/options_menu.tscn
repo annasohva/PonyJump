@@ -1,0 +1,108 @@
+[gd_scene load_steps=4 format=3 uid="uid://0rvou8xusut4"]
+
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="1_3s1t0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en5ci"]
+bg_color = Color(0.560784, 0.403922, 0.321569, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s1t0"]
+bg_color = Color(0.772549, 0.603922, 0.415686, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("StyleBoxFlat_en5ci")
+
+[node name="GameplayOptions" type="Control" parent="BackgroundPanel"]
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AudioOptions" type="Control" parent="BackgroundPanel"]
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GraphicsOptions" type="Control" parent="BackgroundPanel"]
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabBar" type="TabBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.225
+anchor_top = 0.1
+anchor_right = 0.775
+anchor_bottom = 0.2
+offset_left = 0.255981
+offset_bottom = -0.064003
+theme = ExtResource("1_3s1t0")
+current_tab = 0
+scrolling_enabled = false
+scroll_to_selected = false
+tab_count = 3
+tab_0/title = "Gameplay"
+tab_1/title = "Audio"
+tab_2/title = "Graphics"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.8
+anchor_right = 0.79
+anchor_bottom = 0.88
+offset_left = 0.255981
+offset_top = -0.160034
+offset_right = -0.104004
+offset_bottom = 0.18396
+
+[node name="CloseButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_3s1t0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3s1t0")
+text = "Close"

@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1v3ap1bgnkf1"]
+
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="1_gftpv"]
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="2_phke7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phke7"]
+bg_color = Color(1, 0.901961, 0.8, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_n8r4c"]
+font = ExtResource("1_gftpv")
+font_size = 18
+font_color = Color(0.772549, 0.603922, 0.415686, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Scoreboard" type="Control"]
+layout_mode = 3
+anchor_right = 0.233
+anchor_bottom = 0.5
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_phke7")
+
+[node name="ScoreboardLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.15
+text = "Scoreboard"
+label_settings = SubResource("LabelSettings_n8r4c")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.15
+anchor_right = 0.95
+anchor_bottom = 0.95
+theme = ExtResource("2_phke7")
+draw_focus_border = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+layout_mode = 2

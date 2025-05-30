@@ -6,16 +6,16 @@
 [ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="4_i5wg5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omy8q"]
-bg_color = Color(0.602806, 0.713701, 0.770912, 1)
+bg_color = Color(0.772627, 0.602132, 0.415254, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5wg5"]
 bg_color = Color(1, 0.901961, 0.8, 1)
@@ -24,10 +24,10 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3c04x"]
 shader = ExtResource("1_omy8q")
@@ -58,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.562502, 0.403815, 0.323838, 1)
 
-[node name="BluePanel" type="Panel" parent="."]
+[node name="InsidePanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.025
@@ -79,6 +79,38 @@ anchor_top = 0.5
 anchor_right = 0.65
 anchor_bottom = 0.9
 theme_override_styles/panel = SubResource("StyleBoxFlat_i5wg5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+
+[node name="PlayButton" type="Button" parent="ButtonsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="ButtonsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Options"
+
+[node name="CreditsButton" type="Button" parent="ButtonsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="ButtonsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_i5wg5")
+text = "Quit"
 
 [node name="IconTexture" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_3c04x")
@@ -110,35 +142,3 @@ text = "Jump Pony"
 label_settings = SubResource("LabelSettings_joh67")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.55
-anchor_right = 0.6
-anchor_bottom = 0.85
-
-[node name="Button" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("4_i5wg5")
-text = "Play"
-
-[node name="Button2" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("4_i5wg5")
-text = "Options"
-
-[node name="Button3" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("4_i5wg5")
-text = "Credits"
-
-[node name="Button4" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("4_i5wg5")
-text = "Quit"
