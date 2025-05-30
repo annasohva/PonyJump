@@ -102,15 +102,22 @@ func calculate_jump_curve():
 	jump_landing_pos = -global_transform.basis.z.normalized() * jump_length + global_position
 	
 	# Calculating jump height position
+	# Getting the highest mid point of the jump for the obstacle
 	var distance_to_obstacle := (current_obstacle.global_position - global_position).length()
 	var jump_pos_weight := distance_to_obstacle / jump_length
 	var jump_height_pos := global_position.lerp(jump_landing_pos, jump_pos_weight)
-	jump_height_pos.y += jump_charge
+	
+	# Clamping jump charge so that the horse won't jump 5 meters high when held long
+	jump_charge = clamp(jump_charge, 0, current_obstacle.indicator_max)
+	jump_height_pos.y += jump_charge + JUMP_HEIGHT_OFFSET
 	
 	# Adding jump trajectory points to the curve
 	jump_curve.add_point(global_position)
 	jump_curve.add_point(jump_height_pos, transform.basis.z.normalized(), -transform.basis.z.normalized())
 	jump_curve.add_point(jump_landing_pos)
+	
+	# Emitting the jump signal
+	EventSystem.OBS_jump.emit(jump_height_pos.y - JUMP_HEIGHT_OFFSET, -transform.basis.z.normalized())
 
 
 func can_jump() -> bool:
@@ -129,7 +136,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_released("jump"):
 		if can_jump():
 			calculate_jump_curve()
-			EventSystem.OBS_jump.emit(jump_charge, -transform.basis.z.normalized())
 		jump_charge = 0
 	
 	EventSystem.OBS_charge_jump.emit(jump_charge)

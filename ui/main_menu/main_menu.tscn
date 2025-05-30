@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6st4rbcwvkv0"]
+[gd_scene load_steps=10 format=3 uid="uid://b6st4rbcwvkv0"]
 
+[ext_resource type="Script" uid="uid://b4im0rdlr4jm6" path="res://ui/main_menu/main_menu.gd" id="1_3c04x"]
 [ext_resource type="Shader" uid="uid://dc5os084gj0fk" path="res://resources/shaders/texture_color_setter.gdshader" id="1_omy8q"]
 [ext_resource type="Texture2D" uid="uid://cbvrdelry7au4" path="res://assets/textures/jumping_icon.png" id="1_uhj5c"]
 [ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_i5wg5"]
@@ -48,6 +49,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_3c04x")
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
 layout_mode = 1
@@ -142,3 +144,8 @@ text = "Jump Pony"
 label_settings = SubResource("LabelSettings_joh67")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="ButtonsPanel/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ButtonsPanel/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="ButtonsPanel/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="ButtonsPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

@@ -6,7 +6,7 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	load_level(LevelReference.Keys.JumpingArena1)
+	load_level(LevelReference.Keys.MainMenu)
 
 
 func load_level(level_key: LevelReference.Keys):

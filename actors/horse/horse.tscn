@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://kd0c5uppaeuo" path="res://assets/textures/pony/pony_eyes.png" id="3_ebux5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nvxhs"]
+height = 2.4237
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxgn2"]
 resource_name = "Coat"
@@ -85,6 +86,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch54x")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qeg8"]
+radius = 0.2
 
 [node name="Horse" type="CharacterBody3D"]
 script = ExtResource("1_nvxhs")
@@ -94,7 +96,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.4
 shape = SubResource("CapsuleShape3D_nvxhs")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0.150262)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, -0.0233942)
 shape = SubResource("CapsuleShape3D_nvxhs")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
