@@ -1,1 +1,20 @@
 class_name UiReference
+
+
+enum Keys
+{
+	Options,
+	Credits,
+	PauseMenu,
+	JumpingCourse,
+}
+
+
+const UI_UID := {
+	Keys.Options : "uid://0rvou8xusut4",
+	Keys.PauseMenu: "uid://dsgpj8ebxi8t2",
+}
+
+
+static func GetMenu(key: Keys):
+	return load(UI_UID.get(key)).instantiate()

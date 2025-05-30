@@ -2,14 +2,36 @@ extends Node
 
 
 @export var obstacles: Array[Obstacle]
+@export var start_pos: Marker3D
+@export var horse: Horse
 
 var current_obstacle: int = 0
+
 
 func _enter_tree() -> void:
 	EventSystem.OBS_charge_jump.connect(charge_jump)
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)
+	EventSystem.OBS_restart_course.connect(restart_course)
 	obstacles[current_obstacle].set_activate(true)
+
+
+func _ready() -> void:
+	start_course()
+
+
+func start_course():
+	horse.set_starting_pos(start_pos.global_position, start_pos.global_rotation)
+
+
+func restart_course():
+	reset_obstacles()
+	start_course()
+
+
+func reset_obstacles():
+	for obstacle in obstacles:
+		obstacle.reset()
 
 
 func charge_jump(charge_amount: float):

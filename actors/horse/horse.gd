@@ -47,14 +47,26 @@ func _enter_tree() -> void:
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 
 
-func _ready() -> void:
+func set_starting_pos(pos_global: Vector3, rotation_global: Vector3) -> void:
+	# Setting position and rotation
+	global_position = pos_global
+	global_rotation = rotation_global
+	
+	# Setting camera to default pos
 	camera_rotation.y = rotation_degrees.y
 	camera_rotation.x = -30
+	
+	# Stopping horse movement
+	if current_gait == Gaits.Stop: return
+	current_gait = Gaits.Stop
+	adjust_speed()
+	speed = 0
+	velocity = Vector3.ZERO
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
-		get_tree().quit()
+		EventSystem.UI_open_menu.emit(UiReference.Keys.PauseMenu)
 		
 	if event is InputEventMouseMotion:
 		camera_rotation.x -= event.relative.y * CAMERA_SPEED

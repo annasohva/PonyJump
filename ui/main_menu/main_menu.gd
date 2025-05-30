@@ -14,11 +14,12 @@ func _on_play_button_pressed() -> void:
 
 
 func _on_options_button_pressed() -> void:
-	pass # Replace with function body.
+	EventSystem.UI_open_menu.emit(UiReference.Keys.Options)
 
 
 func _on_credits_button_pressed() -> void:
-	pass # Replace with function body.
+	#EventSystem.UI_open_menu.emit(UiReference.Keys.Credits)
+	pass
 
 
 func _on_quit_button_pressed() -> void:

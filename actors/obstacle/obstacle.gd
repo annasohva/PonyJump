@@ -106,6 +106,10 @@ func set_activate(activate: bool) -> void:
 	jumping_area_2_indicator.visible = activate && jumping_area == 2
 
 
+func reset():
+	pass
+
+
 func get_indicator_position() -> IndicatorPosition:
 	var indicator_pos := indicator.position.y - INDICATOR_OFFSET
 	

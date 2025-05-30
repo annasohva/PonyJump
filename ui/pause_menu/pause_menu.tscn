@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsgpj8ebxi8t2"]
+[gd_scene load_steps=5 format=3 uid="uid://dsgpj8ebxi8t2"]
 
 [ext_resource type="PackedScene" uid="uid://c1v3ap1bgnkf1" path="res://ui/scoreboard/scoreboard.tscn" id="1_jbgdu"]
+[ext_resource type="Script" uid="uid://yaxqm87q1mvp" path="res://ui/pause_menu/pause_menu.gd" id="1_le02u"]
 [ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="1_mnjdh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnjdh"]
@@ -16,13 +17,14 @@ corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
 [node name="PauseMenu" type="Control"]
-process_mode = 2
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_le02u")
 
 [node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -82,3 +84,9 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_mnjdh")
 text = "Exit to main menu"
+
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/JumpingCourseButton" to="." method="_on_jumping_course_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

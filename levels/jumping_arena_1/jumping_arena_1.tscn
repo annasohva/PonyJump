@@ -101,11 +101,16 @@ size = Vector2(600, 1200)
 material = ExtResource("2_gtow3")
 size = Vector2(60, 120)
 
-[node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles")]
+[node name="JumpingArena1" type="Node3D" node_paths=PackedStringArray("obstacles", "start_pos", "horse")]
 script = ExtResource("1_suqwx")
 obstacles = [NodePath("Obstacles/Obstacle"), NodePath("Obstacles/Obstacle2"), NodePath("Obstacles/Obstacle3"), NodePath("Obstacles/Obstacle4"), NodePath("Obstacles/Obstacle5"), NodePath("Obstacles/Obstacle6"), NodePath("Obstacles/Obstacle7"), NodePath("Obstacles/Obstacle8"), NodePath("Obstacles/Obstacle9"), NodePath("Obstacles/Obstacle10"), NodePath("Obstacles/Obstacle11"), NodePath("Obstacles/Obstacle12"), NodePath("Obstacles/Obstacle13"), NodePath("Obstacles/Obstacle14"), NodePath("Obstacles/Obstacle15"), NodePath("Obstacles/Obstacle16"), NodePath("Obstacles/Obstacle17"), NodePath("Obstacles/Obstacle18"), NodePath("Obstacles/Obstacle19")]
+start_pos = NodePath("StartPos")
+horse = NodePath("Horse")
 
 [node name="Horse" parent="." instance=ExtResource("1_7a7xo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.4079, 0, -56.6429)
+
+[node name="StartPos" type="Marker3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.4079, 0, -56.6429)
 
 [node name="Obstacles" type="Node3D" parent="."]
