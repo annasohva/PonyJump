@@ -52,16 +52,15 @@ orientation = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_drcfa"]
 size = Vector3(4, 2, 0.1)
 
-[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "jumping_area1", "jumping_area2", "landing_pos1", "landing_pos2", "jumping_area_1_indicator", "jumping_area_2_indicator")]
+[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "landing_pos1", "landing_pos2", "jumping_area_1_indicator", "jumping_area_2_indicator", "obstacle_area")]
 script = ExtResource("1_mgvnl")
 indicator = NodePath("Indicator")
 poles = [NodePath("Pole1"), NodePath("Pole2"), NodePath("Pole3"), NodePath("Pole4"), NodePath("Pole5")]
-jumping_area1 = NodePath("JumpingArea1")
-jumping_area2 = NodePath("JumpingArea2")
 landing_pos1 = NodePath("LandingPos1")
 landing_pos2 = NodePath("LandingPos2")
 jumping_area_1_indicator = NodePath("JumpingArea1Indicator")
 jumping_area_2_indicator = NodePath("JumpingArea2Indicator")
+obstacle_area = NodePath("ObstacleArea")
 
 [node name="SidePole1" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)

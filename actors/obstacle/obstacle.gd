@@ -21,12 +21,11 @@ class_name Obstacle extends Node3D
 @export_category("Node references")
 @export var indicator: Sprite3D
 @export var poles: Array[Pole]
-@export var jumping_area1: Area3D
-@export var jumping_area2: Area3D
 @export var landing_pos1: Marker3D
 @export var landing_pos2: Marker3D
 @export var jumping_area_1_indicator: MeshInstance3D
 @export var jumping_area_2_indicator: MeshInstance3D
+@export var obstacle_area: Area3D
 
 
 enum IndicatorPosition
@@ -37,18 +36,10 @@ enum IndicatorPosition
 	TooHigh
 }
 
-enum StatusType
-{
-	Inactive,
-	Active,
-	IsJumped,
-	Landed
-}
-
 const INDICATOR_OFFSET: float = 0.2
 const PERFECT_RANGE: float = 0.3
 
-var current_status: StatusType = StatusType.Inactive
+var is_active: bool = false
 
 var indicator_max: float:
 	get:
@@ -65,7 +56,7 @@ var indicator_value: float:
 		indicator_value = clamp(value, indicator_min, indicator_max)
 		
 		# Adjusting indicator position
-		indicator.position.y = indicator_value
+		indicator.position.y = indicator_value + INDICATOR_OFFSET
 		
 		# Updating indicator color
 		match get_indicator_position():
@@ -86,17 +77,12 @@ func _enter_tree() -> void:
 		jumping_area_2_indicator.visible = jumping_area == 2
 		return
 	
-	# If in game setting jumping areas and indicators active according to active status and if the chosen jumping area matches
-	jumping_area_1_indicator.visible = current_status == StatusType.Active && jumping_area == 1
-	jumping_area_2_indicator.visible = current_status == StatusType.Active && jumping_area == 2
-	jumping_area1.visible = current_status == StatusType.Active && jumping_area == 1
-	jumping_area2.visible = current_status == StatusType.Active && jumping_area == 2
+	# If in game setting jumping area indicators active according to active status and if the chosen jumping area matches
+	jumping_area_1_indicator.visible = is_active && jumping_area == 1
+	jumping_area_2_indicator.visible = is_active && jumping_area == 2
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:
-	# Setting status being jumped
-	current_status = StatusType.IsJumped
-	
 	# Dropping the poles which are too high
 	var poles_dropped := 0
 	for pole in poles:
@@ -113,22 +99,21 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 func set_activate(activate: bool) -> void:
 	indicator_value = 0
 	indicator.visible = activate
-	if activate:
-		current_status = StatusType.Active
+	is_active = activate
 	
 	# Setting jumping area indicators and areas
 	jumping_area_1_indicator.visible = activate && jumping_area == 1
 	jumping_area_2_indicator.visible = activate && jumping_area == 2
-	jumping_area1.visible = activate && jumping_area == 1
-	jumping_area2.visible = activate && jumping_area == 2
 
 
 func get_indicator_position() -> IndicatorPosition:
-	if indicator.position.y < poles[0].position.y + .001:
+	var indicator_pos := indicator.position.y - INDICATOR_OFFSET
+	
+	if indicator_pos < poles[0].position.y + .001:
 		return IndicatorPosition.Default
-	elif indicator.position.y < get_obstacle_height() + INDICATOR_OFFSET:
+	elif indicator_pos < get_obstacle_height():
 		return IndicatorPosition.Fail
-	elif indicator.position.y < get_obstacle_height() + PERFECT_RANGE + INDICATOR_OFFSET:
+	elif indicator_pos < get_obstacle_height() + PERFECT_RANGE:
 		return IndicatorPosition.Perfect
 	else:
 		return IndicatorPosition.TooHigh
@@ -144,32 +129,31 @@ func adjust_height_after_delay(new_height: int, delay: float):
 
 func _on_jumping_area_1_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		if current_status == StatusType.Active:
+		if is_active:
 			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
 
 
 func _on_jumping_area_2_body_entered(body: Node3D) -> void:
 	if body is Horse:
-		if current_status == StatusType.Active:
+		if is_active:
 			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
 
 
 func _on_jumping_area_body_exited(body: Node3D) -> void:
 	if body is Horse:
 		EventSystem.OBS_jumping_area_exited.emit()
-		if current_status == StatusType.Landed:
-			current_status = StatusType.Inactive
 
 
 func _on_obstacle_area_entered(area: Area3D) -> void:
 	var area_parent = area.get_parent()
+	
 	if area.get_parent() is Horse:
-		if current_status == StatusType.Inactive or current_status == StatusType.Active:
-			EventSystem.OBS_crash.emit(current_status == StatusType.Active)
-			
-			for pole in poles:
-				if pole.visible && !pole.is_dropped:
-					pole.crash(-area_parent.transform.basis.z)
-					pole.is_dropped = true
-			
-			adjust_height_after_delay(0, 3)
+		if area_parent.is_jumping or area_parent.is_just_landed: return
+		EventSystem.OBS_crash.emit(is_active)
+		
+		for pole in poles:
+			if pole.visible && !pole.is_dropped:
+				pole.crash(-area_parent.transform.basis.z)
+				pole.is_dropped = true
+		
+		adjust_height_after_delay(0, 3)
