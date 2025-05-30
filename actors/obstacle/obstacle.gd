@@ -21,6 +21,8 @@ class_name Obstacle extends Node3D
 @export_category("Node references")
 @export var indicator: Sprite3D
 @export var poles: Array[Pole]
+@export var jumping_area1: Area3D
+@export var jumping_area2: Area3D
 @export var landing_pos1: Marker3D
 @export var landing_pos2: Marker3D
 @export var jumping_area_1_indicator: MeshInstance3D
@@ -78,9 +80,17 @@ var indicator_value: float:
 
 
 func _enter_tree() -> void:
-	if (current_status != StatusType.Active):
-		jumping_area_1_indicator.visible = false
-		jumping_area_2_indicator.visible = false
+	# If in editor setting jumping area indicators visible if the chosen jumping area matches
+	if Engine.is_editor_hint():
+		jumping_area_1_indicator.visible = jumping_area == 1
+		jumping_area_2_indicator.visible = jumping_area == 2
+		return
+	
+	# If in game setting jumping areas and indicators active according to active status and if the chosen jumping area matches
+	jumping_area_1_indicator.visible = current_status == StatusType.Active && jumping_area == 1
+	jumping_area_2_indicator.visible = current_status == StatusType.Active && jumping_area == 2
+	jumping_area1.visible = current_status == StatusType.Active && jumping_area == 1
+	jumping_area2.visible = current_status == StatusType.Active && jumping_area == 2
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:
@@ -105,10 +115,12 @@ func set_activate(activate: bool) -> void:
 	indicator.visible = activate
 	if activate:
 		current_status = StatusType.Active
-		jumping_area = jumping_area
-	else:
-		jumping_area_1_indicator.visible = false
-		jumping_area_2_indicator.visible = false
+	
+	# Setting jumping area indicators and areas
+	jumping_area_1_indicator.visible = activate && jumping_area == 1
+	jumping_area_2_indicator.visible = activate && jumping_area == 2
+	jumping_area1.visible = activate && jumping_area == 1
+	jumping_area2.visible = activate && jumping_area == 2
 
 
 func get_indicator_position() -> IndicatorPosition:

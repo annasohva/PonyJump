@@ -46,13 +46,18 @@ func _enter_tree() -> void:
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 
 
+func _ready() -> void:
+	camera_rotation.y = rotation_degrees.y
+	camera_rotation.x = -30
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		get_tree().quit()
 		
 	if event is InputEventMouseMotion:
-		camera_rotation.x -= event.relative.y
-		camera_rotation.y -= event.relative.x
+		camera_rotation.x -= event.relative.y * CAMERA_SPEED
+		camera_rotation.y -= event.relative.x * CAMERA_SPEED
 	
 	if event.is_action_pressed("forward"):
 		current_gait = clamp(current_gait + 1, Gaits.Back, Gaits.Gallop)
@@ -169,8 +174,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	# Rotate and move camera
-	spring_arm.rotation_degrees.x = camera_rotation.x * CAMERA_SPEED
+	spring_arm.rotation_degrees.x = camera_rotation.x
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
-	pivot.rotation_degrees.y = camera_rotation.y * CAMERA_SPEED
+	pivot.rotation_degrees.y = camera_rotation.y
 	pivot.global_position.x = global_position.x
 	pivot.global_position.z = global_position.z

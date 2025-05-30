@@ -86,7 +86,6 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch54x")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qeg8"]
-radius = 0.2
 
 [node name="Horse" type="CharacterBody3D"]
 script = ExtResource("1_nvxhs")

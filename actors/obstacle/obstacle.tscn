@@ -36,9 +36,6 @@ height = 4.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_io0e8"]
 size = Vector3(4, 1, 2.5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_drcfa"]
-size = Vector3(4, 2, 0.1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io0e8"]
 transparency = 1
 shading_mode = 0
@@ -52,10 +49,15 @@ material = SubResource("StandardMaterial3D_io0e8")
 size = Vector2(4, 2.5)
 orientation = 1
 
-[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "landing_pos1", "landing_pos2", "jumping_area_1_indicator", "jumping_area_2_indicator")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_drcfa"]
+size = Vector3(4, 2, 0.1)
+
+[node name="Obstacle" type="Node3D" node_paths=PackedStringArray("indicator", "poles", "jumping_area1", "jumping_area2", "landing_pos1", "landing_pos2", "jumping_area_1_indicator", "jumping_area_2_indicator")]
 script = ExtResource("1_mgvnl")
 indicator = NodePath("Indicator")
 poles = [NodePath("Pole1"), NodePath("Pole2"), NodePath("Pole3"), NodePath("Pole4"), NodePath("Pole5")]
+jumping_area1 = NodePath("JumpingArea1")
+jumping_area2 = NodePath("JumpingArea2")
 landing_pos1 = NodePath("LandingPos1")
 landing_pos2 = NodePath("LandingPos2")
 jumping_area_1_indicator = NodePath("JumpingArea1Indicator")
@@ -175,6 +177,10 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="JumpingArea1"]
 shape = SubResource("BoxShape3D_io0e8")
 
+[node name="JumpingArea1Indicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 2)
+mesh = SubResource("QuadMesh_drcfa")
+
 [node name="JumpingArea2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 input_ray_pickable = false
@@ -183,22 +189,17 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="JumpingArea2"]
 shape = SubResource("BoxShape3D_io0e8")
 
+[node name="JumpingArea2Indicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2)
+visible = false
+mesh = SubResource("QuadMesh_drcfa")
+
 [node name="ObstacleArea" type="Area3D" parent="."]
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_drcfa")
-
-[node name="JumpingArea1Indicator" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 2)
-visible = false
-mesh = SubResource("QuadMesh_drcfa")
-
-[node name="JumpingArea2Indicator" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -2)
-visible = false
-mesh = SubResource("QuadMesh_drcfa")
 
 [connection signal="body_entered" from="JumpingArea1" to="." method="_on_jumping_area_1_body_entered"]
 [connection signal="body_exited" from="JumpingArea1" to="." method="_on_jumping_area_body_exited"]
