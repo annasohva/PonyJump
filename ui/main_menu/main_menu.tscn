@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b4im0rdlr4jm6" path="res://ui/main_menu/main_menu.gd" id="1_3c04x"]
 [ext_resource type="Shader" uid="uid://dc5os084gj0fk" path="res://resources/shaders/texture_color_setter.gdshader" id="1_omy8q"]
-[ext_resource type="Texture2D" uid="uid://cbvrdelry7au4" path="res://assets/textures/jumping_icon.png" id="1_uhj5c"]
 [ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_i5wg5"]
+[ext_resource type="Texture2D" uid="uid://ddw820ckcqnwi" path="res://ponyjump.png" id="4_3c04x"]
 [ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="4_i5wg5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_omy8q"]
@@ -127,8 +127,9 @@ offset_top = 0.151978
 offset_bottom = -0.152039
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_uhj5c")
-stretch_mode = 3
+texture = ExtResource("4_3c04x")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 1
@@ -141,7 +142,7 @@ offset_left = 0.527985
 offset_top = -0.28801
 offset_right = -0.552063
 offset_bottom = 0.247986
-text = "Jump Pony"
+text = "Pony Jump"
 label_settings = SubResource("LabelSettings_joh67")
 horizontal_alignment = 1
 vertical_alignment = 1

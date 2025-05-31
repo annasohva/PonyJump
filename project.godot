@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="JumpingGame"
+config/name="Pony Jump"
+config/version="1.0"
 run/main_scene="uid://b58gq1jtfn2x8"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://assets/icon.svg"
+config/icon="uid://ddw820ckcqnwi"
 
 [autoload]
 
