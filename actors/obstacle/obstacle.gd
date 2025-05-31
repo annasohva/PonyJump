@@ -108,6 +108,9 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 	if poles_dropped > 0:
 		adjust_height_after_delay(3)
 		new_height = height - poles_dropped
+		
+		# Emitting the signal that poles were dropped
+		EventSystem.OBS_poles_dropped.emit()
 
 
 func set_activate(activate: bool) -> void:

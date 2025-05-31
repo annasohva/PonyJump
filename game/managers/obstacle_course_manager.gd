@@ -6,9 +6,17 @@ extends Node
 @export var horse: Horse
 
 var current_obstacle: int = 0
+
 var record_time: bool = false
 var timer: float = 0
 var seconds: int = 0
+
+var faults: int = 0:
+	get:
+		return faults
+	set(value):
+		faults = value
+		EventSystem.HUD_set_faults_text.emit(str(faults))
 
 
 func _enter_tree() -> void:
@@ -16,13 +24,14 @@ func _enter_tree() -> void:
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)
 	EventSystem.OBS_restart_course.connect(restart_course)
+	EventSystem.OBS_poles_dropped.connect(handle_poles_dropped)
 
 
 func _ready() -> void:
 	start_course()
 
 
-func start_course():
+func start_course() -> void:
 	# Setting horse to the starting position
 	horse.set_starting_pos(start_pos.global_position, start_pos.global_rotation)
 	
@@ -34,10 +43,13 @@ func start_course():
 	record_time = true
 
 
-func restart_course():
+func restart_course() -> void:
 	# Resetting the timer
 	timer = 0
 	EventSystem.HUD_set_timer_text.emit("00:00")
+	
+	# Resetting faults counter
+	faults = 0
 	
 	# Resetting the obstacles
 	reset_obstacles()
@@ -46,7 +58,7 @@ func restart_course():
 	start_course()
 
 
-func reset_obstacles():
+func reset_obstacles() -> void:
 	# Setting the active obstacle inactive
 	if current_obstacle < obstacles.size():
 		obstacles[current_obstacle].set_activate(false)
@@ -60,20 +72,25 @@ func reset_obstacles():
 		obstacle.reset()
 
 
-func charge_jump(charge_amount: float):
+func charge_jump(charge_amount: float) -> void:
 	if current_obstacle >= obstacles.size(): return
 	obstacles[current_obstacle].indicator_value = charge_amount
 
 
-func handle_jump(jump_height: float, direction: Vector3):
+func handle_jump(jump_height: float, direction: Vector3) -> void:
 	if current_obstacle >= obstacles.size(): return
 	obstacles[current_obstacle].handle_jump(jump_height, direction)
 	activate_next_obstacle()
 
 
-func handle_crash(is_active: bool):
+func handle_crash(is_active: bool) -> void:
 	if is_active:
 		activate_next_obstacle()
+		faults += 1
+
+
+func handle_poles_dropped() -> void:
+	faults += 1
 
 
 func activate_next_obstacle() -> void:
