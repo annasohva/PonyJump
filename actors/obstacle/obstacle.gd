@@ -60,7 +60,8 @@ var indicator_value: float:
 		indicator.position.y = indicator_value + INDICATOR_OFFSET
 		
 		# Updating indicator color
-		match get_indicator_position():
+		var indicator_pos = get_indicator_position()
+		match indicator_pos:
 			IndicatorPosition.Default:
 				indicator.modulate = Color.WHITE
 			IndicatorPosition.Fail:
@@ -69,6 +70,12 @@ var indicator_value: float:
 				indicator.modulate = Color.BLUE
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
+		
+		# Saving the indicator position to a variable
+		if indicator_pos != IndicatorPosition.Default:
+			indicator_position = indicator_pos
+
+var indicator_position: IndicatorPosition = IndicatorPosition.Default
 
 var new_height: int = -1
 var original_height: int
@@ -111,6 +118,19 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 		
 		# Emitting the signal that poles were dropped
 		EventSystem.OBS_poles_dropped.emit()
+	
+	# Calculating points earned
+	var points_earned: int
+	match indicator_position:
+		IndicatorPosition.Perfect:
+			points_earned = 300
+		IndicatorPosition.TooHigh:
+			points_earned = 100
+		IndicatorPosition.Fail:
+			points_earned = 10
+	
+	# Emitting the signal to earn points
+	EventSystem.OBS_points_earned.emit(points_earned)
 
 
 func set_activate(activate: bool) -> void:
@@ -129,6 +149,7 @@ func reset():
 	height = original_height
 	new_height = -1
 	if !timer.is_stopped(): timer.stop()
+	indicator_value = 0
 
 
 func get_indicator_position() -> IndicatorPosition:

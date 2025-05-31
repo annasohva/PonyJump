@@ -18,6 +18,13 @@ var faults: int = 0:
 		faults = value
 		EventSystem.HUD_set_faults_text.emit(str(faults))
 
+var score: int = 0:
+	get:
+		return score
+	set(value):
+		score = value
+		EventSystem.HUD_set_score_text.emit(str(score))
+
 
 func _enter_tree() -> void:
 	EventSystem.OBS_charge_jump.connect(charge_jump)
@@ -25,6 +32,7 @@ func _enter_tree() -> void:
 	EventSystem.OBS_crash.connect(handle_crash)
 	EventSystem.OBS_restart_course.connect(restart_course)
 	EventSystem.OBS_poles_dropped.connect(handle_poles_dropped)
+	EventSystem.OBS_points_earned.connect(handle_points_earned)
 
 
 func _ready() -> void:
@@ -48,8 +56,9 @@ func restart_course() -> void:
 	timer = 0
 	EventSystem.HUD_set_timer_text.emit("00:00")
 	
-	# Resetting faults counter
+	# Resetting faults and score counter
 	faults = 0
+	score = 0
 	
 	# Resetting the obstacles
 	reset_obstacles()
@@ -93,6 +102,10 @@ func handle_poles_dropped() -> void:
 	faults += 1
 
 
+func handle_points_earned(points: int) -> void:
+	score += points
+
+
 func activate_next_obstacle() -> void:
 	# Setting current obstacle inactive
 	obstacles[current_obstacle].set_activate(false)
@@ -119,5 +132,5 @@ func _process(delta: float) -> void:
 	var old_seconds := seconds
 	seconds = floori(timer)
 	if seconds > old_seconds:
-		var minutes := floori(seconds / 60)
+		var minutes := floori(seconds / 60.0)
 		EventSystem.HUD_set_timer_text.emit("%02d:%02d" % [minutes, seconds - minutes * 60])
