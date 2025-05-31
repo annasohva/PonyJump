@@ -21,4 +21,5 @@ func crash(direction: Vector3):
 
 func reset():
 	freeze = true
+	is_dropped = false
 	transform = original_transform
