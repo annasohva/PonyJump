@@ -13,3 +13,10 @@ signal OBS_jump
 signal OBS_crash
 
 signal UI_open_menu
+
+signal HUD_set_countdown_text
+signal HUD_set_timer_text
+signal HUD_set_score_text
+signal HUD_set_obstacle_text
+signal HUD_set_faults_text
+signal HUD_set_gait_text

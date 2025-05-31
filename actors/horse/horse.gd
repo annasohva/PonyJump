@@ -31,12 +31,12 @@ const JUMP_HEIGHT_OFFSET := 0.4
 
 enum Gaits
 {
-	Back = -1,
-	Stop = 0,
-	Walk = 1,
-	Trot = 2,
-	Canter = 3,
-	Gallop = 4
+	Backward,
+	Stop,
+	Walk,
+	Trot,
+	Canter,
+	Gallop
 }
 
 var camera_rotation: Vector2 = Vector2.ZERO
@@ -79,11 +79,11 @@ func _input(event: InputEvent) -> void:
 		camera_rotation.y -= event.relative.x * CAMERA_SPEED
 	
 	if event.is_action_pressed("forward"):
-		current_gait = clamp(current_gait + 1, Gaits.Back, Gaits.Gallop)
+		current_gait = clamp(current_gait + 1, Gaits.Backward, Gaits.Gallop)
 		adjust_speed()
 	
 	if event.is_action_pressed("backward"):
-		current_gait = clamp(current_gait - 1, Gaits.Back, Gaits.Gallop)
+		current_gait = clamp(current_gait - 1, Gaits.Backward, Gaits.Gallop)
 		adjust_speed()
 	
 	if event is InputEventMouseButton and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -92,7 +92,7 @@ func _input(event: InputEvent) -> void:
 
 func adjust_speed():
 	match current_gait:
-		Gaits.Back:
+		Gaits.Backward:
 			gait_speed = -3
 		Gaits.Stop:
 			gait_speed = 0
@@ -104,6 +104,8 @@ func adjust_speed():
 			gait_speed = 15
 		Gaits.Gallop:
 			gait_speed = 20
+	
+	EventSystem.HUD_set_gait_text.emit(current_gait)
 
 
 func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
