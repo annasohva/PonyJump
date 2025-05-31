@@ -86,6 +86,8 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ch54x")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qeg8"]
+radius = 0.2
+height = 1.0
 
 [node name="Horse" type="CharacterBody3D"]
 script = ExtResource("1_nvxhs")
@@ -134,8 +136,17 @@ skeleton = NodePath("")
 
 [node name="ObstacleCrashArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 2
 collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleCrashArea"]
+shape = SubResource("CapsuleShape3D_5qeg8")
+
+[node name="FrontHoofArea" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0.1, -0.8)
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrontHoofArea"]
 shape = SubResource("CapsuleShape3D_5qeg8")

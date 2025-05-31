@@ -170,6 +170,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="JumpingArea1" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+collision_layer = 0
 input_ray_pickable = false
 monitorable = false
 
@@ -182,6 +183,7 @@ mesh = SubResource("QuadMesh_drcfa")
 
 [node name="JumpingArea2" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+collision_layer = 0
 input_ray_pickable = false
 monitorable = false
 
@@ -195,13 +197,14 @@ mesh = SubResource("QuadMesh_drcfa")
 
 [node name="ObstacleArea" type="Area3D" parent="."]
 collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstacleArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_drcfa")
 
-[connection signal="body_entered" from="JumpingArea1" to="." method="_on_jumping_area_1_body_entered"]
-[connection signal="body_exited" from="JumpingArea1" to="." method="_on_jumping_area_body_exited"]
-[connection signal="body_entered" from="JumpingArea2" to="." method="_on_jumping_area_2_body_entered"]
-[connection signal="body_exited" from="JumpingArea2" to="." method="_on_jumping_area_body_exited"]
+[connection signal="area_entered" from="JumpingArea1" to="." method="_on_jumping_area_1_entered"]
+[connection signal="area_exited" from="JumpingArea1" to="." method="_on_jumping_area_exited"]
+[connection signal="area_entered" from="JumpingArea2" to="." method="_on_jumping_area_2_entered"]
+[connection signal="area_exited" from="JumpingArea2" to="." method="_on_jumping_area_exited"]
 [connection signal="area_entered" from="ObstacleArea" to="." method="_on_obstacle_area_entered"]

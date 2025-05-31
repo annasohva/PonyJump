@@ -155,20 +155,20 @@ func _on_timer_timeout() -> void:
 	new_height = -1
 
 
-func _on_jumping_area_1_body_entered(body: Node3D) -> void:
-	if body is Horse:
+func _on_jumping_area_1_entered(area: Area3D) -> void:
+	if area.get_parent() is Horse:
 		if is_active:
 			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos1.global_position)
 
 
-func _on_jumping_area_2_body_entered(body: Node3D) -> void:
-	if body is Horse:
+func _on_jumping_area_2_entered(area: Area3D) -> void:
+	if area.get_parent() is Horse:
 		if is_active:
 			EventSystem.OBS_jumping_area_entered.emit(self, landing_pos2.global_position)
 
 
-func _on_jumping_area_body_exited(body: Node3D) -> void:
-	if body is Horse:
+func _on_jumping_area_exited(area: Area3D) -> void:
+	if area.get_parent() is Horse:
 		EventSystem.OBS_jumping_area_exited.emit()
 
 
@@ -176,7 +176,6 @@ func _on_obstacle_area_entered(area: Area3D) -> void:
 	var area_parent = area.get_parent()
 	
 	if area.get_parent() is Horse:
-		if area_parent.is_jumping or area_parent.is_just_landed: return
 		EventSystem.OBS_crash.emit(is_active)
 		
 		for pole in poles:

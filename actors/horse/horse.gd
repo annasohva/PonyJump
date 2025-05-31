@@ -4,6 +4,8 @@ class_name Horse extends CharacterBody3D
 @onready var spring_arm: SpringArm3D = $Pivot/SpringArm3D
 @onready var pivot: Node3D = $Pivot
 @onready var obstacle_vision_ray: RayCast3D = $ObstacleVisionRay
+@onready var obstacle_crash_area: Area3D = $ObstacleCrashArea
+
 
 var is_jumping: bool:
 	get:
@@ -107,8 +109,9 @@ func on_jumping_area_entered(obstacle: Obstacle, landing_pos: Vector3):
 
 func on_jumping_area_exited():
 	jump_landing_pos = Vector3.ZERO
-	if (!is_jumping):
+	if not (is_jumping):
 		current_obstacle = null
+		if (is_just_landed): obstacle_crash_area.set_deferred("monitorable", true)
 	is_just_landed = false
 
 
@@ -154,6 +157,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_released("jump"):
 		if can_jump():
+			obstacle_crash_area.monitorable = false
 			calculate_jump_curve()
 		jump_charge = 0
 	
