@@ -1,9 +1,11 @@
-extends Node
+class_name ObstacleCourseManager extends Node
 
 
 @export var obstacles: Array[Obstacle]
 @export var start_pos: Marker3D
 @export var horse: Horse
+
+static var CourseComplete: bool = false
 
 var current_obstacle: int = 0
 
@@ -62,6 +64,9 @@ func reset_course(restart: bool) -> void:
 	# Stopping music
 	EventSystem.MUS_stop_music.emit()
 	
+	# Resetting the CourseComplete variable
+	CourseComplete = false
+	
 	# Resetting the timer
 	reset_timer()
 	
@@ -98,6 +103,13 @@ func reset_timer():
 	EventSystem.HUD_set_timer_text.emit("00:00")
 
 
+func show_game_over(delay: float):
+	# Emitting signal to show game over screen
+	get_tree().create_timer(delay).timeout.connect(func():
+		EventSystem.UI_open_menu.emit(UiReference.Keys.GameOver)
+	)
+
+
 func charge_jump(charge_amount: float) -> void:
 	if current_obstacle >= obstacles.size(): return
 	obstacles[current_obstacle].indicator_value = charge_amount
@@ -121,6 +133,9 @@ func handle_crash(is_active: bool) -> void:
 	if is_active:
 		activate_next_obstacle()
 		faults += 1
+	else:
+		# If crashing into a obstacle which is not active it's the wrong order and game over
+		show_game_over(.5)
 
 
 func handle_poles_dropped() -> void:
@@ -141,6 +156,10 @@ func activate_next_obstacle() -> void:
 	# Activating the next obstacle if there is a obstacle at the index in the obstacle array
 	if current_obstacle < obstacles.size():
 		obstacles[current_obstacle].set_activate(true)
+	else:
+		# If there is no more obstacles in the array show game over screen
+		CourseComplete = true
+		show_game_over(1)
 	
 	# Emitting the signal to set obstacle text in the hud
 	EventSystem.HUD_set_obstacle_text.emit("%s/%s" % [current_obstacle, obstacles.size()])

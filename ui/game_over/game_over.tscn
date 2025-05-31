@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://cddtewvnfjqbw"]
+
+[ext_resource type="PackedScene" uid="uid://c1v3ap1bgnkf1" path="res://ui/scoreboard/scoreboard.tscn" id="1_4cp6t"]
+[ext_resource type="Script" uid="uid://dfn13j4m66614" path="res://ui/game_over/game_over.gd" id="1_6lpyu"]
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="2_6lpyu"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_0hcq4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu5ql"]
+bg_color = Color(0.772627, 0.602132, 0.415254, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_d7ayw"]
+font = ExtResource("3_0hcq4")
+font_size = 24
+font_color = Color(1, 0.901961, 0.8, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6lpyu")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.2
+anchor_right = 0.75
+anchor_bottom = 0.8
+offset_left = -0.480011
+offset_top = -0.152008
+offset_right = -0.343994
+offset_bottom = -0.0480347
+theme_override_styles/panel = SubResource("StyleBoxFlat_cu5ql")
+
+[node name="Scoreboard" parent="BackgroundPanel" instance=ExtResource("1_4cp6t")]
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.45
+anchor_bottom = 0.95
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.95
+anchor_bottom = 0.9
+
+[node name="PlayAgainButton" type="Button" parent="BackgroundPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_6lpyu")
+text = "Play again"
+
+[node name="JumpingCourseButton" type="Button" parent="BackgroundPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_6lpyu")
+text = "Change jumping course"
+
+[node name="ExitButton" type="Button" parent="BackgroundPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_6lpyu")
+text = "Exit to main menu"
+
+[node name="GameOverLabel" type="Label" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.4
+text = "Course completed!"
+label_settings = SubResource("LabelSettings_d7ayw")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/JumpingCourseButton" to="." method="_on_jumping_course_button_pressed"]
+[connection signal="pressed" from="BackgroundPanel/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
