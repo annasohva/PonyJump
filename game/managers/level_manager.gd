@@ -10,6 +10,8 @@ func _ready() -> void:
 
 
 func load_level(level_key: LevelReference.Keys):
+	EventSystem.LEV_level_changed.emit()
+	
 	for level in get_children():
 		level.queue_free()
 	

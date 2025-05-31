@@ -2,6 +2,7 @@ extends Node
 
 
 signal LEV_change_level
+signal LEV_level_changed
 
 signal OBS_restart_course
 signal OBS_select_course

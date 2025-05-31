@@ -49,6 +49,10 @@ func _enter_tree() -> void:
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 
 
+func _ready() -> void:
+	EventSystem.UI_open_menu.emit(UiReference.Keys.PlayerHud)
+
+
 func set_starting_pos(pos_global: Vector3, rotation_global: Vector3) -> void:
 	# Setting position and rotation
 	global_position = pos_global
