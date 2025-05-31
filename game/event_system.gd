@@ -17,6 +17,7 @@ signal OBS_points_earned
 signal OBS_perfect_points_earned
 
 signal UI_open_menu
+signal UI_toggle_hud
 
 signal HUD_set_countdown_text
 signal HUD_set_timer_text
