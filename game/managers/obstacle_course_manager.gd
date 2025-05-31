@@ -51,11 +51,17 @@ func start_course() -> void:
 	obstacles[current_obstacle].set_activate(true)
 	EventSystem.HUD_set_obstacle_text.emit("%s/%s" % [current_obstacle, obstacles.size()])
 	
+	# Stopping music for the countdown
+	EventSystem.MUS_stop_music.emit()
+	
 	# Starting the countdown
 	countdown = true
 
 
 func reset_course(restart: bool) -> void:
+	# Stopping music
+	EventSystem.MUS_stop_music.emit()
+	
 	# Resetting the timer
 	reset_timer()
 	
@@ -102,6 +108,7 @@ func handle_countdown_go():
 	reset_timer()
 	record_time = true
 	horse.can_move = true
+	EventSystem.MUS_play_music.emit(MusicReference.Keys.PonyJump)
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:

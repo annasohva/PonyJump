@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxsjq6i84jeqb" path="res://game/managers/level_manager.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c3w0h0laqtkk8" path="res://game/managers/ui_manager.gd" id="3_1bvp3"]
-[ext_resource type="AudioStream" uid="uid://mmnpw6oiqxn3" path="res://assets/music/ponyjump.ogg" id="3_emt18"]
+[ext_resource type="Script" uid="uid://vopqvtu8kar8" path="res://game/managers/music_manager.gd" id="3_vop5m"]
 
 [node name="Main" type="Node"]
 
@@ -12,7 +12,9 @@ script = ExtResource("2_h2yge")
 [node name="UiManager" type="Node" parent="."]
 script = ExtResource("3_1bvp3")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MusicManager" type="Node" parent="." node_paths=PackedStringArray("music_player")]
+script = ExtResource("3_vop5m")
+music_player = NodePath("MusicPlayer")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
 process_mode = 3
-stream = ExtResource("3_emt18")
-autoplay = true

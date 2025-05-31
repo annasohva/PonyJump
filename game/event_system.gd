@@ -26,3 +26,6 @@ signal HUD_set_score_text
 signal HUD_set_obstacle_text
 signal HUD_set_faults_text
 signal HUD_set_gait_text
+
+signal MUS_play_music
+signal MUS_stop_music

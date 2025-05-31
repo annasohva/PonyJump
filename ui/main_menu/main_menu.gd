@@ -4,6 +4,10 @@ extends Control
 @onready var quit_button: Button = $ButtonsPanel/VBoxContainer/QuitButton
 
 
+func _ready() -> void:
+	EventSystem.MUS_play_music.emit(MusicReference.Keys.PonyJump)
+
+
 func _on_play_button_pressed() -> void:
 	EventSystem.LEV_change_level.emit(LevelReference.Keys.JumpingArena1)
 
