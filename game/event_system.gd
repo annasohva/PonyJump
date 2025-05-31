@@ -7,6 +7,7 @@ signal LEV_level_changed
 signal OBS_start_course
 signal OBS_reset_course
 signal OBS_select_course
+signal OBS_countdown_go
 signal OBS_jumping_area_entered
 signal OBS_jumping_area_exited
 signal OBS_charge_jump

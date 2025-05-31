@@ -10,11 +10,11 @@ extends Control
 
 enum CountdownType
 {
-	None,
 	Three,
 	Two,
 	One,
-	Go
+	Go,
+	None,
 }
 
 
@@ -32,8 +32,6 @@ func set_countdown_text(countdown: CountdownType) -> void:
 	var text: String
 	
 	match countdown:
-		CountdownType.None:
-			text = ""
 		CountdownType.Three:
 			text = "3"
 		CountdownType.Two:
@@ -42,6 +40,11 @@ func set_countdown_text(countdown: CountdownType) -> void:
 			text = "1"
 		CountdownType.Go:
 			text = "Go!"
+			EventSystem.OBS_countdown_go.emit()
+			# Creating timer to set text to none after 1 s
+			get_tree().create_timer(1).timeout.connect(func(): set_countdown_text(CountdownType.None))
+		CountdownType.None:
+			text = ""
 	
 	countdown_label.text = text
 

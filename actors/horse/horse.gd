@@ -12,11 +12,12 @@ var is_jumping: bool:
 		return jump_curve.point_count != 0
 var is_just_landed: bool = false
 
+var can_move: bool = true
 var gait_speed: int = 0
 var speed: float = 0
 var acceleration: float = .5
-
 var current_gait: Gaits = Gaits.Stop
+
 var jump_curve: Curve3D = Curve3D.new()
 var current_obstacle: Obstacle = null
 
@@ -81,11 +82,11 @@ func _input(event: InputEvent) -> void:
 		camera_rotation.x -= event.relative.y * CAMERA_SPEED
 		camera_rotation.y -= event.relative.x * CAMERA_SPEED
 	
-	if event.is_action_pressed("forward"):
+	if event.is_action_pressed("forward") && can_move:
 		current_gait = clamp(current_gait + 1, Gaits.Backward, Gaits.Gallop)
 		adjust_speed()
 	
-	if event.is_action_pressed("backward"):
+	if event.is_action_pressed("backward") && can_move:
 		current_gait = clamp(current_gait - 1, Gaits.Backward, Gaits.Gallop)
 		adjust_speed()
 	
@@ -193,7 +194,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Handle turning
 		var turn_dir := Input.get_axis("left", "right")
-		if turn_dir:
+		if turn_dir && can_move:
 			rotate_y(-deg_to_rad(turn_dir * TURNING_SPEED))
 		
 		# Calculate speed and velocity

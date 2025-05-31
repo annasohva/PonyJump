@@ -8,8 +8,9 @@ extends Node
 var current_obstacle: int = 0
 
 var record_time: bool = false
+var countdown: bool = false
 var timer: float = 0
-var seconds: int = 0
+var seconds: int = -1
 
 var faults: int = 0:
 	get:
@@ -28,6 +29,7 @@ var score: int = 0:
 
 func _enter_tree() -> void:
 	EventSystem.OBS_start_course.connect(start_course)
+	EventSystem.OBS_countdown_go.connect(handle_countdown_go)
 	EventSystem.OBS_charge_jump.connect(charge_jump)
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)
@@ -41,21 +43,21 @@ func _ready() -> void:
 
 
 func start_course() -> void:
-	# Setting horse to the starting position
+	# Setting horse to the starting position and preventing moving yet
 	horse.set_starting_pos(start_pos.global_position, start_pos.global_rotation)
+	horse.can_move = false
 	
 	# Activating the first obstacle and setting the hud obstacle text
 	obstacles[current_obstacle].set_activate(true)
 	EventSystem.HUD_set_obstacle_text.emit("%s/%s" % [current_obstacle, obstacles.size()])
 	
-	# Starting the timer
-	record_time = true
+	# Starting the countdown
+	countdown = true
 
 
 func reset_course(restart: bool) -> void:
 	# Resetting the timer
-	timer = 0
-	EventSystem.HUD_set_timer_text.emit("00:00")
+	reset_timer()
 	
 	# Resetting faults and score counter
 	faults = 0
@@ -82,9 +84,24 @@ func reset_obstacles() -> void:
 		obstacle.reset()
 
 
+func reset_timer():
+	record_time = false
+	countdown = false
+	timer = 0
+	seconds = -1
+	EventSystem.HUD_set_timer_text.emit("00:00")
+
+
 func charge_jump(charge_amount: float) -> void:
 	if current_obstacle >= obstacles.size(): return
 	obstacles[current_obstacle].indicator_value = charge_amount
+
+
+func handle_countdown_go():
+	countdown = false
+	reset_timer()
+	record_time = true
+	horse.can_move = true
 
 
 func handle_jump(jump_height: float, direction: Vector3) -> void:
@@ -123,15 +140,16 @@ func activate_next_obstacle() -> void:
 
 
 func _process(delta: float) -> void:
-	# Returning if we don't need to record time
-	if not record_time: return
-	
-	# Increasing the timer
-	timer += delta
-	
-	# Checking if the seconds increased by one and if so, emit the signal to set hud timer text
-	var old_seconds := seconds
-	seconds = floori(timer)
-	if seconds > old_seconds:
-		var minutes := floori(seconds / 60.0)
-		EventSystem.HUD_set_timer_text.emit("%02d:%02d" % [minutes, seconds - minutes * 60])
+	if record_time or countdown:
+		# Increasing the timer
+		timer += delta
+		
+		# Checking if the seconds increased by one and if so, emit the signal to set hud timer text
+		var old_seconds := seconds
+		seconds = floori(timer)
+		if seconds > old_seconds:
+			if record_time:
+				var minutes := floori(seconds / 60.0)
+				EventSystem.HUD_set_timer_text.emit("%02d:%02d" % [minutes, seconds - minutes * 60])
+			elif countdown:
+				EventSystem.HUD_set_countdown_text.emit(seconds)
