@@ -124,6 +124,8 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 	match indicator_position:
 		IndicatorPosition.Perfect:
 			points_earned = 300
+			# Emitting the signal that perfect points are earned to trigger star particles
+			EventSystem.OBS_perfect_points_earned.emit()
 		IndicatorPosition.TooHigh:
 			points_earned = 100
 		IndicatorPosition.Fail:

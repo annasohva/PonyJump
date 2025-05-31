@@ -5,7 +5,7 @@ class_name Horse extends CharacterBody3D
 @onready var pivot: Node3D = $Pivot
 @onready var obstacle_vision_ray: RayCast3D = $ObstacleVisionRay
 @onready var obstacle_crash_area: Area3D = $ObstacleCrashArea
-
+@onready var perfect_particles: CPUParticles3D = $PerfectParticles
 
 var is_jumping: bool:
 	get:
@@ -47,10 +47,14 @@ func _enter_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
+	EventSystem.OBS_perfect_points_earned.connect(on_perfect_points_earned)
 
 
 func _ready() -> void:
 	EventSystem.UI_open_menu.emit(UiReference.Keys.PlayerHud)
+	
+	# Emitting the particles so that they don't cause lag afterwards
+	perfect_particles.emitting = true
 
 
 func set_starting_pos(pos_global: Vector3, rotation_global: Vector3) -> void:
@@ -119,6 +123,10 @@ func on_jumping_area_exited():
 		current_obstacle = null
 		if (is_just_landed): obstacle_crash_area.set_deferred("monitorable", true)
 	is_just_landed = false
+
+
+func on_perfect_points_earned():
+	perfect_particles.emitting = true
 
 
 func calculate_jump_curve():

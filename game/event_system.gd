@@ -13,6 +13,7 @@ signal OBS_jump
 signal OBS_crash
 signal OBS_poles_dropped
 signal OBS_points_earned
+signal OBS_perfect_points_earned
 
 signal UI_open_menu
 
