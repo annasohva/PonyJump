@@ -39,6 +39,7 @@ enum IndicatorPosition
 
 const INDICATOR_OFFSET: float = 0.2
 const PERFECT_RANGE: float = 0.3
+const GRACE_OFFSET: float = 0.1
 
 var is_active: bool = false
 
@@ -70,12 +71,6 @@ var indicator_value: float:
 				indicator.modulate = Color.BLUE
 			IndicatorPosition.TooHigh:
 				indicator.modulate = Color.SLATE_GRAY
-		
-		# Saving the indicator position to a variable
-		if indicator_pos != IndicatorPosition.Default:
-			indicator_position = indicator_pos
-
-var indicator_position: IndicatorPosition = IndicatorPosition.Default
 
 var new_height: int = -1
 var original_height: int
@@ -120,16 +115,17 @@ func handle_jump(jump_height: float, direction: Vector3) -> void:
 		EventSystem.OBS_poles_dropped.emit()
 	
 	# Calculating points earned
-	var points_earned: int
-	match indicator_position:
-		IndicatorPosition.Perfect:
-			points_earned = 300
-			# Emitting the signal that perfect points are earned to trigger star particles
-			EventSystem.OBS_perfect_points_earned.emit()
-		IndicatorPosition.TooHigh:
-			points_earned = 100
-		IndicatorPosition.Fail:
-			points_earned = 10
+	var obstacle_height := get_obstacle_height()
+	var points_earned: int = 0
+	
+	if jump_height < obstacle_height: # Fail earns 10 points for correct timing
+		points_earned = 10
+	elif jump_height <= obstacle_height + PERFECT_RANGE + GRACE_OFFSET: # Perfect, giving a grace offset
+		points_earned = 300
+		# Emitting the signal that perfect points are earned to trigger star particles
+		EventSystem.OBS_perfect_points_earned.emit()
+	else: # Too High
+		points_earned = 100
 	
 	# Emitting the signal to earn points
 	EventSystem.OBS_points_earned.emit(points_earned)
@@ -156,12 +152,13 @@ func reset():
 
 func get_indicator_position() -> IndicatorPosition:
 	var indicator_pos := indicator.position.y - INDICATOR_OFFSET
+	var obstacle_height := get_obstacle_height()
 	
 	if indicator_pos < poles[0].position.y + .001:
 		return IndicatorPosition.Default
-	elif indicator_pos < get_obstacle_height():
+	elif indicator_pos < obstacle_height:
 		return IndicatorPosition.Fail
-	elif indicator_pos < get_obstacle_height() + PERFECT_RANGE:
+	elif indicator_pos < obstacle_height + PERFECT_RANGE:
 		return IndicatorPosition.Perfect
 	else:
 		return IndicatorPosition.TooHigh
