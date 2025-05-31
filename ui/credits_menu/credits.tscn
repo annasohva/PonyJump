@@ -1,0 +1,111 @@
+[gd_scene load_steps=9 format=3 uid="uid://b67fbw34tn5e6"]
+
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="1_6qpsf"]
+[ext_resource type="Script" uid="uid://4es1fgaavmwo" path="res://ui/credits_menu/credits.gd" id="1_ff1l7"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="1_wrr1c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffr3c"]
+bg_color = Color(0.772627, 0.602132, 0.415254, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qpsf"]
+bg_color = Color(0.560784, 0.403922, 0.321569, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ff1l7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umgus"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ccp0v"]
+content_margin_left = 50.0
+content_margin_right = 50.0
+
+[node name="Credits" type="Control" node_paths=PackedStringArray("credits_text_edit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ff1l7")
+credits_text_edit = NodePath("BackgroundPanel/InsidePanel/ScrollContainer/TextEdit")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.05
+anchor_right = 0.975
+anchor_bottom = 0.95
+offset_left = -0.256001
+offset_top = 0.208
+offset_right = 0.407959
+offset_bottom = 0.271973
+theme_override_styles/panel = SubResource("StyleBoxFlat_ffr3c")
+
+[node name="InsidePanel" type="Panel" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("StyleBoxFlat_6qpsf")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BackgroundPanel/InsidePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.025
+anchor_right = 0.99
+anchor_bottom = 0.975
+theme = ExtResource("1_6qpsf")
+
+[node name="TextEdit" type="TextEdit" parent="BackgroundPanel/InsidePanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_readonly_color = Color(1, 0.901961, 0.8, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_wrr1c")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ff1l7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_umgus")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_ccp0v")
+editable = false
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+wrap_mode = 1
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.91
+anchor_right = 0.95
+anchor_bottom = 0.98
+size_flags_horizontal = 3
+theme = ExtResource("1_6qpsf")
+text = "Close"
+
+[connection signal="pressed" from="BackgroundPanel/CloseButton" to="." method="_on_close_button_pressed"]

@@ -13,7 +13,7 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_credits_button_pressed() -> void:
-	#EventSystem.UI_open_menu.emit(UiReference.Keys.Credits)
+	EventSystem.UI_open_menu.emit(UiReference.Keys.Credits)
 	pass
 
 
