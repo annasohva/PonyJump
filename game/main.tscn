@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b58gq1jtfn2x8"]
+[gd_scene load_steps=5 format=3 uid="uid://b58gq1jtfn2x8"]
 
 [ext_resource type="Script" uid="uid://cxsjq6i84jeqb" path="res://game/managers/level_manager.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c3w0h0laqtkk8" path="res://game/managers/ui_manager.gd" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://vopqvtu8kar8" path="res://game/managers/music_manager.gd" id="3_vop5m"]
+[ext_resource type="Script" uid="uid://b7vye57yv6tul" path="res://game/managers/scoreboard_manager.gd" id="4_vop5m"]
 
 [node name="Main" type="Node"]
 
@@ -18,3 +19,6 @@ music_player = NodePath("MusicPlayer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
 process_mode = 3
+
+[node name="ScoreboardManager" type="Node" parent="."]
+script = ExtResource("4_vop5m")

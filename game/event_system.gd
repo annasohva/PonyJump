@@ -1,8 +1,18 @@
 extends Node
 
 
+signal HUD_set_countdown_text
+signal HUD_set_timer_text
+signal HUD_set_score_text
+signal HUD_set_obstacle_text
+signal HUD_set_faults_text
+signal HUD_set_gait_text
+
 signal LEV_change_level
 signal LEV_level_changed
+
+signal MUS_play_music
+signal MUS_stop_music
 
 signal OBS_start_course
 signal OBS_reset_course
@@ -17,15 +27,7 @@ signal OBS_poles_dropped
 signal OBS_points_earned
 signal OBS_perfect_points_earned
 
+signal SCO_record_score
+
 signal UI_open_menu
 signal UI_toggle_hud
-
-signal HUD_set_countdown_text
-signal HUD_set_timer_text
-signal HUD_set_score_text
-signal HUD_set_obstacle_text
-signal HUD_set_faults_text
-signal HUD_set_gait_text
-
-signal MUS_play_music
-signal MUS_stop_music

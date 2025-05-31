@@ -104,8 +104,12 @@ func reset_timer():
 
 
 func show_game_over(delay: float):
-	# Emitting signal to show game over screen
+	# Creating a timer
 	get_tree().create_timer(delay).timeout.connect(func():
+		# If course was completed we record score
+		EventSystem.SCO_record_score.emit(seconds, score, faults)
+		
+		# Emitting signal to show game over screen
 		EventSystem.UI_open_menu.emit(UiReference.Keys.GameOver)
 	)
 
@@ -159,6 +163,7 @@ func activate_next_obstacle() -> void:
 	else:
 		# If there is no more obstacles in the array show game over screen
 		CourseComplete = true
+		record_time = false
 		show_game_over(1)
 	
 	# Emitting the signal to set obstacle text in the hud

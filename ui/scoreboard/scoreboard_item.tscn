@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp8t06q6qfma6"]
+
+[ext_resource type="Script" uid="uid://djpoydn1rnidt" path="res://ui/scoreboard/scoreboard_item.gd" id="1_8405d"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="1_l4m21"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8405d"]
+bg_color = Color(0.560784, 0.403922, 0.321569, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_y7ytt"]
+font = ExtResource("1_l4m21")
+font_size = 18
+font_color = Color(1, 0.901961, 0.8, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ScoreboardItem" type="Control"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_8405d")
+
+[node name="ScorePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8405d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScorePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RankingLabel" type="Label" parent="ScorePanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+label_settings = SubResource("LabelSettings_y7ytt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="ScorePanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "00:00"
+label_settings = SubResource("LabelSettings_y7ytt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="ScorePanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0000"
+label_settings = SubResource("LabelSettings_y7ytt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FaultsLabel" type="Label" parent="ScorePanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_y7ytt")
+horizontal_alignment = 1
+vertical_alignment = 1

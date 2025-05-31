@@ -1,7 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1v3ap1bgnkf1"]
+[gd_scene load_steps=13 format=3 uid="uid://c1v3ap1bgnkf1"]
 
 [ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="1_gftpv"]
+[ext_resource type="Script" uid="uid://o2hggie15jmr" path="res://ui/scoreboard/scoreboard.gd" id="1_u5t5h"]
 [ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="2_phke7"]
+[ext_resource type="Shader" uid="uid://dc5os084gj0fk" path="res://resources/shaders/texture_color_setter.gdshader" id="3_by0le"]
+[ext_resource type="Texture2D" uid="uid://bdrjank5no5k6" path="res://assets/ui/timer_icon.png" id="4_h5ic4"]
+[ext_resource type="Texture2D" uid="uid://3u7mkydcuyd1" path="res://assets/ui/score_icon.png" id="5_67vhi"]
+[ext_resource type="Texture2D" uid="uid://43fwfw1410nf" path="res://assets/ui/fault_icon.png" id="6_6w2yb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phke7"]
 bg_color = Color(1, 0.901961, 0.8, 1)
@@ -18,14 +23,31 @@ corner_radius_bottom_left = 25
 [sub_resource type="LabelSettings" id="LabelSettings_n8r4c"]
 font = ExtResource("1_gftpv")
 font_size = 18
-font_color = Color(0.772549, 0.603922, 0.415686, 1)
+font_color = Color(0.941176, 0.890196, 0.839216, 1)
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Scoreboard" type="Control"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f35gs"]
+shader = ExtResource("3_by0le")
+shader_parameter/tex_color = Color(0.943359, 0.891769, 0.840179, 1)
+shader_parameter/blend_amount = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x240h"]
+shader = ExtResource("3_by0le")
+shader_parameter/tex_color = Color(0.949219, 0.72298, 0.291069, 1)
+shader_parameter/blend_amount = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eipow"]
+shader = ExtResource("3_by0le")
+shader_parameter/tex_color = Color(0.830078, 0.189686, 0.189686, 1)
+shader_parameter/blend_amount = 1.0
+
+[node name="Scoreboard" type="Control" node_paths=PackedStringArray("scoreboard_item_holder")]
 layout_mode = 3
 anchor_right = 0.233
 anchor_bottom = 0.5
+script = ExtResource("1_u5t5h")
+scoreboard_item_holder = NodePath("Panel/VBoxContainer/ScrollContainer/ScoreboardItemHolder")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -36,25 +58,66 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_phke7")
 
-[node name="ScoreboardLabel" type="Label" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
 anchor_top = 0.05
 anchor_right = 0.95
-anchor_bottom = 0.15
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreboardLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
 text = "Scoreboard"
 label_settings = SubResource("LabelSettings_n8r4c")
+vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.15
-anchor_right = 0.95
-anchor_bottom = 0.95
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Separator" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_f35gs")
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimeIcon" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_f35gs")
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_h5ic4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScoreIcon" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_x240h")
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("5_67vhi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FaultsIcon" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_eipow")
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_6w2yb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("2_phke7")
 draw_focus_border = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+[node name="ScoreboardItemHolder" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
