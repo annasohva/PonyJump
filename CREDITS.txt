@@ -14,6 +14,8 @@ CC0 (http://creativecommons.org/publicdomain/zero/1.0/):
 -----------------------------------------------------------
 Nature assets: Free Stylized Forest Kit by Asset Quest https://assetquest.itch.io/free-forest-kit
 Fences: Medieval Village MegaKit by Quaternius https://quaternius.itch.io/medieval-village-megakit
+Grass texture: Tileable Grass Textures - Set 2 by Cethiel https://opengameart.org/content/tileable-grass-textures-set-2
+Dirt texture: Tileable Dirt Textures by Cethiel https://opengameart.org/content/tileable-dirt-textures
 
 -----------------------------------------------------------
 OFL 1.1:
