@@ -24,6 +24,7 @@ func start_course():
 	if current_obstacle != 0:
 		obstacles[current_obstacle].set_activate(false)
 		current_obstacle = 0
+	EventSystem.HUD_set_obstacle_text.emit("%s/%s" % [current_obstacle, obstacles.size()])
 	obstacles[current_obstacle].set_activate(true)
 
 
@@ -56,5 +57,5 @@ func handle_crash(is_active: bool):
 func activate_next_obstacle() -> void:
 	obstacles[current_obstacle].set_activate(false)
 	current_obstacle += 1
-	if current_obstacle >= obstacles.size(): current_obstacle = 0
-	obstacles[current_obstacle].set_activate(true)
+	if current_obstacle < obstacles.size(): obstacles[current_obstacle].set_activate(true)
+	EventSystem.HUD_set_obstacle_text.emit("%s/%s" % [current_obstacle, obstacles.size()])
