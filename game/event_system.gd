@@ -4,7 +4,8 @@ extends Node
 signal LEV_change_level
 signal LEV_level_changed
 
-signal OBS_restart_course
+signal OBS_start_course
+signal OBS_reset_course
 signal OBS_select_course
 signal OBS_jumping_area_entered
 signal OBS_jumping_area_exited

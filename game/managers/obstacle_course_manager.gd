@@ -27,16 +27,17 @@ var score: int = 0:
 
 
 func _enter_tree() -> void:
+	EventSystem.OBS_start_course.connect(start_course)
 	EventSystem.OBS_charge_jump.connect(charge_jump)
 	EventSystem.OBS_jump.connect(handle_jump)
 	EventSystem.OBS_crash.connect(handle_crash)
-	EventSystem.OBS_restart_course.connect(restart_course)
+	EventSystem.OBS_reset_course.connect(reset_course)
 	EventSystem.OBS_poles_dropped.connect(handle_poles_dropped)
 	EventSystem.OBS_points_earned.connect(handle_points_earned)
 
 
 func _ready() -> void:
-	start_course()
+	EventSystem.UI_open_menu.emit(UiReference.Keys.JumpingCourse)
 
 
 func start_course() -> void:
@@ -51,7 +52,7 @@ func start_course() -> void:
 	record_time = true
 
 
-func restart_course() -> void:
+func reset_course(restart: bool) -> void:
 	# Resetting the timer
 	timer = 0
 	EventSystem.HUD_set_timer_text.emit("00:00")
@@ -63,8 +64,8 @@ func restart_course() -> void:
 	# Resetting the obstacles
 	reset_obstacles()
 	
-	# Starting the course again
-	start_course()
+	# Starting the course again if restart is true
+	if restart: start_course()
 
 
 func reset_obstacles() -> void:

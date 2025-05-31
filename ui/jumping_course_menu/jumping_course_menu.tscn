@@ -1,0 +1,139 @@
+[gd_scene load_steps=10 format=3 uid="uid://cpiahabodqwvv"]
+
+[ext_resource type="PackedScene" uid="uid://c1v3ap1bgnkf1" path="res://ui/scoreboard/scoreboard.tscn" id="1_5g4w2"]
+[ext_resource type="Script" uid="uid://clqfva3ixbayr" path="res://ui/jumping_course_menu/jumping_course_menu.gd" id="1_ddyo7"]
+[ext_resource type="Texture2D" uid="uid://btk7ndlk775ye" path="res://assets/ui/jumping_course_1.png" id="2_ddyo7"]
+[ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="2_fb1be"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_ddyo7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0dbm"]
+bg_color = Color(0.772627, 0.602132, 0.415254, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ticdx"]
+bg_color = Color(1, 0.901961, 0.8, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_17wul"]
+font = ExtResource("3_ddyo7")
+font_size = 18
+font_color = Color(1, 0.901961, 0.8, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8batv"]
+font = ExtResource("3_ddyo7")
+font_size = 18
+font_color = Color(1, 0.901961, 0.8, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="JumpingCourseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ddyo7")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("StyleBoxFlat_s0dbm")
+
+[node name="Scoreboard" parent="BackgroundPanel" instance=ExtResource("1_5g4w2")]
+layout_mode = 1
+anchor_left = 0.6
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.75
+
+[node name="CourseLayoutPanel" type="Panel" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ticdx")
+
+[node name="TextureRect" type="TextureRect" parent="BackgroundPanel/CourseLayoutPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.99
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ddyo7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CourseSelector" type="HBoxContainer" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.83
+anchor_right = 0.5
+anchor_bottom = 0.91
+
+[node name="LeftButton" type="Button" parent="BackgroundPanel/CourseSelector"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme = ExtResource("2_fb1be")
+text = "<"
+
+[node name="CourseLabel" type="Label" parent="BackgroundPanel/CourseSelector"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Jumping Course"
+label_settings = SubResource("LabelSettings_17wul")
+horizontal_alignment = 1
+
+[node name="CourseNumber" type="Label" parent="BackgroundPanel/CourseSelector"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_8batv")
+horizontal_alignment = 1
+
+[node name="RightButton" type="Button" parent="BackgroundPanel/CourseSelector"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme = ExtResource("2_fb1be")
+text = ">"
+
+[node name="PlayButton" type="Button" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.8
+anchor_right = 0.9
+anchor_bottom = 0.91
+theme = ExtResource("2_fb1be")
+text = "Start Course"
+
+[connection signal="pressed" from="BackgroundPanel/PlayButton" to="." method="_on_play_button_pressed"]

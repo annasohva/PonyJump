@@ -44,7 +44,6 @@ var jump_landing_pos: Vector3 = Vector3.ZERO
 
 
 func _enter_tree() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	EventSystem.OBS_jumping_area_entered.connect(on_jumping_area_entered)
 	EventSystem.OBS_jumping_area_exited.connect(on_jumping_area_exited)
 	EventSystem.OBS_perfect_points_earned.connect(on_perfect_points_earned)

@@ -73,7 +73,6 @@ theme = ExtResource("1_mnjdh")
 text = "Options"
 
 [node name="JumpingCourseButton" type="Button" parent="BackgroundPanel/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_mnjdh")

@@ -16,6 +16,7 @@ const UI_UID := {
 	Keys.PauseMenu: "uid://dsgpj8ebxi8t2",
 	Keys.Credits: "uid://b67fbw34tn5e6",
 	Keys.PlayerHud: "uid://cqqtup7iaj4a5",
+	Keys.JumpingCourse: "uid://cpiahabodqwvv"
 }
 
 

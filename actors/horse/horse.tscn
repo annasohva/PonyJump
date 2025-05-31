@@ -168,6 +168,7 @@ monitoring = false
 shape = SubResource("CapsuleShape3D_5qeg8")
 
 [node name="PerfectParticles" type="CPUParticles3D" parent="."]
+process_mode = 3
 transform = Transform3D(-0.00664961, -0.999978, 0, 0.999978, -0.00664961, 0, 0, 0, 1, 0, 1.6626, 0)
 emitting = false
 one_shot = true
