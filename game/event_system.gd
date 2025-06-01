@@ -29,5 +29,22 @@ signal OBS_perfect_points_earned
 
 signal SCO_record_score
 
+signal SET_set_camera_speed_x
+signal SET_set_camera_speed_y
+signal SET_toggle_camera_invert_x
+signal SET_toggle_camera_invert_y
+signal SET_toggle_perfect_jump_particles
+signal SET_set_general_volume
+signal SET_set_music_volume
+signal SET_set_sfx_volume
+signal SET_set_ambience_volume
+signal SET_set_game_window
+signal SET_set_fps
+signal SET_set_anti_aliasing
+signal SET_toggle_shadows
+signal SET_toggle_trees
+signal SET_toggle_foliage
+signal SET_toggle_nature_props
+
 signal UI_open_menu
 signal UI_toggle_hud

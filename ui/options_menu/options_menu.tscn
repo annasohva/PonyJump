@@ -51,7 +51,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="OptionsMenu" type="Control"]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("camera_speed_x_slider", "camera_speed_x_spin_box", "camera_speed_y_slider", "camera_speed_y_spin_box", "camera_invert_x_check_button", "camera_invert_y_check_button", "perfect_jump_particles_check_button", "general_volume_slider", "general_volume_spin_box", "music_volume_slider", "music_volume_spin_box", "sfx_volume_slider", "sfx_volume_spin_box", "ambience_volume_slider", "ambience_volume_spin_box", "game_window_option_button", "fps_option_button", "anti_aliasing_option_button", "shadows_check_button", "trees_check_button", "foliage_check_button", "nature_props_check_button")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -60,6 +60,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8h7tm")
+camera_speed_x_slider = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX/CameraSpeedXSlider")
+camera_speed_x_spin_box = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX/CameraSpeedXSpinBox")
+camera_speed_y_slider = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY/CameraSpeedYSlider")
+camera_speed_y_spin_box = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY/CameraSpeedYSpinBox")
+camera_invert_x_check_button = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertX/CameraInvertXCheckButton")
+camera_invert_y_check_button = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertY/CameraInvertYCheckButton")
+perfect_jump_particles_check_button = NodePath("BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticles/PerfectJumpParticlesCheckButton")
+general_volume_slider = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume/GeneralVolumeSlider")
+general_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume/GeneralVolumeSpinBox")
+music_volume_slider = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume/MusicVolumeSlider")
+music_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume/MusicVolumeSpinBox")
+sfx_volume_slider = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume/SFXVolumeSlider")
+sfx_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume/SFXVolumeSpinBox")
+ambience_volume_slider = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume/AmbienceVolumeSlider")
+ambience_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume/AmbienceVolumeSpinBox")
+game_window_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxGameWindow/GameWindowOptionButton")
+fps_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFPS/FPSOptionButton")
+anti_aliasing_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxAntiAliasing/AntiAliasingOptionButton")
+shadows_check_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxShadows/ShadowsCheckButton")
+trees_check_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxTrees/TreesCheckButton")
+foliage_check_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFoliage/FoliageCheckButton")
+nature_props_check_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxNatureProps/NaturePropsCheckButton")
 
 [node name="TabBar" type="TabBar" parent="."]
 layout_mode = 1
@@ -127,12 +149,15 @@ max_value = 1.5
 step = 0.01
 value = 0.8
 
-[node name="CameraSpeedXLineEdit" type="LineEdit" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX"]
+[node name="CameraSpeedXSpinBox" type="SpinBox" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "0.8"
-emoji_menu_enabled = false
+min_value = 0.1
+max_value = 1.5
+step = 0.01
+value = 0.8
+custom_arrow_step = 0.01
 select_all_on_focus = true
 
 [node name="HBoxCameraSpeedY" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
@@ -154,12 +179,15 @@ max_value = 1.5
 step = 0.01
 value = 0.8
 
-[node name="CameraSpeedYLineEdit" type="LineEdit" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY"]
+[node name="CameraSpeedYSpinBox" type="SpinBox" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "0.8"
-emoji_menu_enabled = false
+min_value = 0.1
+max_value = 1.5
+step = 0.01
+value = 0.8
+custom_arrow_step = 0.01
 select_all_on_focus = true
 
 [node name="HBoxCameraInvertX" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
@@ -196,15 +224,15 @@ layout_mode = 2
 text = "Accessibility"
 label_settings = SubResource("LabelSettings_tjtux")
 
-[node name="HBoxPerfectJumpParticle" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+[node name="HBoxPerfectJumpParticles" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
 layout_mode = 2
 
-[node name="PerfectJumpParticleLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticle"]
+[node name="PerfectJumpParticlesLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticles"]
 layout_mode = 2
 text = "Perfect jump particle effect"
 label_settings = SubResource("LabelSettings_wakw5")
 
-[node name="PerfectJumpParticleCheckButton" type="CheckButton" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticle"]
+[node name="PerfectJumpParticlesCheckButton" type="CheckButton" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticles"]
 layout_mode = 2
 button_pressed = true
 
@@ -247,12 +275,12 @@ layout_mode = 2
 size_flags_vertical = 1
 value = 100.0
 
-[node name="GeneralVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume"]
+[node name="GeneralVolumeSpinBox" type="SpinBox" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "100"
-emoji_menu_enabled = false
+value = 100.0
+custom_arrow_step = 1.0
 select_all_on_focus = true
 
 [node name="HBoxMusicVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
@@ -271,12 +299,12 @@ layout_mode = 2
 size_flags_vertical = 1
 value = 100.0
 
-[node name="MusicVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume"]
+[node name="MusicVolumeSpinBox" type="SpinBox" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "100"
-emoji_menu_enabled = false
+value = 100.0
+custom_arrow_step = 1.0
 select_all_on_focus = true
 
 [node name="HBoxSFXVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
@@ -295,13 +323,12 @@ layout_mode = 2
 size_flags_vertical = 1
 editable = false
 
-[node name="SFXVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume"]
+[node name="SFXVolumeSpinBox" type="SpinBox" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "0"
 editable = false
-emoji_menu_enabled = false
+custom_arrow_step = 1.0
 select_all_on_focus = true
 
 [node name="HBoxAmbienceVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
@@ -320,13 +347,12 @@ layout_mode = 2
 size_flags_vertical = 1
 editable = false
 
-[node name="AmbienceVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume"]
+[node name="AmbienceVolumeSpinBox" type="SpinBox" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme = ExtResource("1_3s1t0")
-text = "0"
 editable = false
-emoji_menu_enabled = false
+custom_arrow_step = 1.0
 select_all_on_focus = true
 
 [node name="GraphicsOptions" type="Control" parent="BackgroundPanel"]
