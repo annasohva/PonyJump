@@ -86,7 +86,10 @@ enum AntiAliasingOptions
 
 
 func _ready() -> void:
-	# Gameplay options signals
+	# Getting the settings dictionary from SettingsManager
+	var settings := SettingsManager.Settings
+	
+	# Gameplay options
 	
 	# Connecting camera_speed_x_slider value_changed signal
 	camera_speed_x_slider.value_changed.connect(func(value):
@@ -98,6 +101,12 @@ func _ready() -> void:
 	camera_speed_x_spin_box.value_changed.connect(func(value):
 		camera_speed_x_slider.value = value
 		EventSystem.SET_set_camera_speed_x.emit(value)
+	)
+	
+	# Loading saved camera_speed_x value
+	camera_speed_x_slider.value = settings.get(
+		SettingsManager.CAMERA_SPEED_X_KEY,
+		camera_speed_x_slider.value # Using editor value as default
 	)
 	
 	# Connecting camera_speed_y_slider value_changed signal
@@ -112,16 +121,40 @@ func _ready() -> void:
 		EventSystem.SET_set_camera_speed_y.emit(value)
 	)
 	
+	# Loading saved camera_speed_y value
+	camera_speed_y_slider.value = settings.get(
+		SettingsManager.CAMERA_SPEED_Y_KEY,
+		camera_speed_y_slider.value # Using editor value as default
+	)
+	
 	# Connecting camera_invert_x_check_button toggled signal
 	camera_invert_x_check_button.toggled.connect(EventSystem.SET_toggle_camera_invert_x.emit)
+	
+	# Loading saved camera_invert_x value
+	camera_invert_x_check_button.button_pressed = settings.get(
+		SettingsManager.CAMERA_INVERT_X_KEY,
+		camera_invert_x_check_button.button_pressed # Using editor value as default
+	)
 	
 	# Connecting camera_invert_y_check_button toggled signal
 	camera_invert_y_check_button.toggled.connect(EventSystem.SET_toggle_camera_invert_y.emit)
 	
+	# Loading saved camera_invert_y value
+	camera_invert_y_check_button.button_pressed = settings.get(
+		SettingsManager.CAMERA_INVERT_Y_KEY,
+		camera_invert_y_check_button.button_pressed # Using editor value as default
+	)
+	
 	# Connecting perfect_jump_particles_check_button toggled signal
 	perfect_jump_particles_check_button.toggled.connect(EventSystem.SET_toggle_perfect_jump_particles.emit)
 	
-	# Audio options signals
+	# Loading saved perfect_jump_particles value
+	perfect_jump_particles_check_button.button_pressed = settings.get(
+		SettingsManager.PERFECT_JUMP_PARTICLES_KEY,
+		perfect_jump_particles_check_button.button_pressed # Using editor value as default
+	)
+	
+	# Audio options
 	
 	# Connecting general_volume_slider value_changed signal
 	general_volume_slider.value_changed.connect(func(value):
@@ -133,6 +166,12 @@ func _ready() -> void:
 	general_volume_spin_box.value_changed.connect(func(value):
 		general_volume_slider.value = value
 		EventSystem.SET_set_general_volume.emit(value)
+	)
+	
+	# Loading saved general_volume value
+	general_volume_slider.value = settings.get(
+		SettingsManager.GENERAL_VOLUME_KEY,
+		general_volume_slider.value # Using editor value as default
 	)
 	
 	# Connecting music_volume_slider value_changed signal
@@ -147,6 +186,12 @@ func _ready() -> void:
 		EventSystem.SET_set_music_volume.emit(value)
 	)
 	
+	# Loading saved music_volume value
+	music_volume_slider.value = settings.get(
+		SettingsManager.MUSIC_VOLUME_KEY,
+		music_volume_slider.value # Using editor value as default
+	)
+	
 	# Connecting sfx_volume_slider value_changed signal
 	sfx_volume_slider.value_changed.connect(func(value):
 		sfx_volume_spin_box.value = value
@@ -157,6 +202,12 @@ func _ready() -> void:
 	sfx_volume_spin_box.value_changed.connect(func(value):
 		sfx_volume_slider.value = value
 		EventSystem.SET_set_sfx_volume.emit(value)
+	)
+	
+	# Loading saved sfx_volume value
+	sfx_volume_slider.value = settings.get(
+		SettingsManager.SFX_VOLUME_KEY,
+		sfx_volume_slider.value # Using editor value as default
 	)
 	
 	# Connecting ambience_volume_slider value_changed signal
@@ -171,28 +222,79 @@ func _ready() -> void:
 		EventSystem.SET_set_ambience_volume.emit(value)
 	)
 	
-	# Graphics options signals
+	# Loading saved ambience_volume value
+	ambience_volume_slider.value = settings.get(
+		SettingsManager.AMBIENCE_VOLUME_KEY,
+		ambience_volume_slider.value # Using editor value as default
+	)
+	
+	# Graphics options
 	
 	# Connecting game_window_option_button item_selected signal
 	game_window_option_button.item_selected.connect(EventSystem.SET_set_game_window.emit)
 	
+	# Loading saved game_window value
+	game_window_option_button.selected = settings.get(
+		SettingsManager.GAME_WINDOW_KEY,
+		game_window_option_button.selected  # Using editor value as default
+	)
+	
 	# Connecting fps_option_button item_selected signal
 	fps_option_button.item_selected.connect(EventSystem.SET_set_fps.emit)
+	
+	# Loading saved fps value
+	fps_option_button.selected = settings.get(
+		SettingsManager.FPS_KEY,
+		fps_option_button.selected  # Using editor value as default
+	)
 	
 	# Connecting anti_aliasing_option_button item_selected signal
 	anti_aliasing_option_button.item_selected.connect(EventSystem.SET_set_anti_aliasing.emit)
 	
+	# Loading saved anti_aliasing value
+	anti_aliasing_option_button.selected = settings.get(
+		SettingsManager.ANTI_ALIASING_KEY,
+		anti_aliasing_option_button.selected  # Using editor value as default
+	)
+	
 	# Connecting shadows_check_button toggled signal
 	shadows_check_button.toggled.connect(EventSystem.SET_toggle_shadows.emit)
+	
+	# Loading saved shadows value
+	shadows_check_button.button_pressed = settings.get(
+		SettingsManager.SHADOWS_KEY,
+		shadows_check_button.button_pressed # Using editor value as default
+	)
 	
 	# Connecting trees_check_button toggled signal
 	trees_check_button.toggled.connect(EventSystem.SET_toggle_trees.emit)
 	
+	# Loading saved trees value
+	trees_check_button.button_pressed = settings.get(
+		SettingsManager.TREES_KEY,
+		trees_check_button.button_pressed # Using editor value as default
+	)
+	
 	# Connecting foliage_check_button toggled signal
 	foliage_check_button.toggled.connect(EventSystem.SET_toggle_foliage.emit)
 	
+	# Loading saved foliage value
+	foliage_check_button.button_pressed = settings.get(
+		SettingsManager.FOLIAGE_KEY,
+		foliage_check_button.button_pressed # Using editor value as default
+	)
+	
 	# Connecting nature_props_check_button toggled signal
 	nature_props_check_button.toggled.connect(EventSystem.SET_toggle_nature_props.emit)
+	
+	# Loading saved nature_props value
+	nature_props_check_button.button_pressed = settings.get(
+		SettingsManager.NATURE_PROPS_KEY,
+		nature_props_check_button.button_pressed # Using editor value as default
+	)
+
+func _exit_tree() -> void:
+	EventSystem.SET_save_settings.emit()
 
 
 func _on_close_button_pressed() -> void:

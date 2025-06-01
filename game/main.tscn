@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b58gq1jtfn2x8"]
+[gd_scene load_steps=6 format=3 uid="uid://b58gq1jtfn2x8"]
 
 [ext_resource type="Script" uid="uid://cxsjq6i84jeqb" path="res://game/managers/level_manager.gd" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c3w0h0laqtkk8" path="res://game/managers/ui_manager.gd" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://vopqvtu8kar8" path="res://game/managers/music_manager.gd" id="3_vop5m"]
 [ext_resource type="Script" uid="uid://b7vye57yv6tul" path="res://game/managers/scoreboard_manager.gd" id="4_vop5m"]
+[ext_resource type="Script" uid="uid://c4s12fyvyqpap" path="res://game/managers/settings_manager.gd" id="5_5un7r"]
 
 [node name="Main" type="Node"]
 
@@ -22,3 +23,6 @@ process_mode = 3
 
 [node name="ScoreboardManager" type="Node" parent="."]
 script = ExtResource("4_vop5m")
+
+[node name="SettingsManager" type="Node" parent="."]
+script = ExtResource("5_5un7r")

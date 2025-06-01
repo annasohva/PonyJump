@@ -29,6 +29,7 @@ signal OBS_perfect_points_earned
 
 signal SCO_record_score
 
+signal SET_save_settings
 signal SET_set_camera_speed_x
 signal SET_set_camera_speed_y
 signal SET_toggle_camera_invert_x
