@@ -1,9 +1,10 @@
-[gd_scene load_steps=68 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=69 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
 [ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
 [ext_resource type="PackedScene" uid="uid://bgq4i734dmumc" path="res://actors/obstacle/obstacle.tscn" id="2_eg61u"]
 [ext_resource type="Material" uid="uid://bua56o2ki6uwi" path="res://assets/materials/ground/dirt.tres" id="2_gtow3"]
+[ext_resource type="Script" uid="uid://c7vq8spglypxl" path="res://game/shadow_toggler.gd" id="4_2fer4"]
 [ext_resource type="PackedScene" uid="uid://d3siooyjb25cw" path="res://assets/models/fence/wooden_fence_extension_2.gltf" id="5_yfumg"]
 [ext_resource type="Material" uid="uid://b6gq1jmunbs1p" path="res://assets/materials/ground/forest_floor.tres" id="6_idgeb"]
 [ext_resource type="PackedScene" uid="uid://d28bwt7g3hl0b" path="res://assets/models/forest_kit/Birch_Tree_1.fbx" id="7_bq7wc"]
@@ -201,9 +202,9 @@ environment = SubResource("Environment_eg61u")
 transform = Transform3D(1, 0, 0, 0, 0.313313, 0.94965, 0, -0.94965, 0.313313, 0, 47.0768, 37.923)
 light_color = Color(0.975327, 0.937217, 0.795395, 1)
 light_bake_mode = 1
-shadow_enabled = true
 shadow_opacity = 0.75
 directional_shadow_mode = 0
+script = ExtResource("4_2fer4")
 
 [node name="ForestGround" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
