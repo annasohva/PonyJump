@@ -107,7 +107,7 @@ func show_game_over(delay: float):
 	# Creating a timer
 	get_tree().create_timer(delay).timeout.connect(func():
 		# If course was completed we record score
-		EventSystem.SCO_record_score.emit(seconds, score, faults)
+		if CourseComplete: EventSystem.SCO_record_score.emit(seconds, score, faults)
 		
 		# Emitting signal to show game over screen
 		EventSystem.UI_open_menu.emit(UiReference.Keys.GameOver)
