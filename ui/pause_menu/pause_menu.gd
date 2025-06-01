@@ -29,7 +29,6 @@ func _on_restart_button_pressed() -> void:
 
 
 func _on_options_button_pressed() -> void:
-	get_tree().paused = false
 	EventSystem.UI_open_menu.emit(UiReference.Keys.Options)
 
 

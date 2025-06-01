@@ -41,6 +41,7 @@ signal SET_set_sfx_volume
 signal SET_set_ambience_volume
 signal SET_set_game_window
 signal SET_set_fps
+signal SET_toggle_vsync
 signal SET_set_anti_aliasing
 signal SET_toggle_shadows
 signal SET_toggle_trees

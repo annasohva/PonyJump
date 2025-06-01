@@ -22,7 +22,9 @@ music_player = NodePath("MusicPlayer")
 process_mode = 3
 
 [node name="ScoreboardManager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("4_vop5m")
 
 [node name="SettingsManager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("5_5un7r")
