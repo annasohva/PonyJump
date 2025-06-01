@@ -6,11 +6,6 @@ func _enter_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("escape"):
-		continue_gameplay()
-
-
 func continue_gameplay():
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
