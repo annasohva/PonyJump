@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cl0qeocx6gpnl"]
+[gd_scene load_steps=70 format=3 uid="uid://cl0qeocx6gpnl"]
 
 [ext_resource type="PackedScene" uid="uid://dctqvp1pympjo" path="res://actors/horse/horse.tscn" id="1_7a7xo"]
 [ext_resource type="Script" uid="uid://cte0wod8q0g6x" path="res://game/managers/obstacle_course_manager.gd" id="1_suqwx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Material" uid="uid://b6gq1jmunbs1p" path="res://assets/materials/ground/forest_floor.tres" id="6_idgeb"]
 [ext_resource type="PackedScene" uid="uid://d28bwt7g3hl0b" path="res://assets/models/forest_kit/Birch_Tree_1.fbx" id="7_bq7wc"]
 [ext_resource type="PackedScene" uid="uid://ctw3s8x5rg7d5" path="res://assets/models/forest_kit/Birch_Tree_2.fbx" id="8_gwyy3"]
+[ext_resource type="Script" uid="uid://bkqa7bg1874do" path="res://game/environment_toggler.gd" id="8_rc1qb"]
 [ext_resource type="PackedScene" uid="uid://diu8lb0v25ymr" path="res://assets/models/forest_kit/Birch_Tree_3.fbx" id="9_2fer4"]
 [ext_resource type="PackedScene" uid="uid://cuafmsefa24mq" path="res://assets/models/forest_kit/Young_Birch_Tree_2.fbx" id="10_rc1qb"]
 [ext_resource type="PackedScene" uid="uid://crpqjoagka5fu" path="res://assets/models/forest_kit/Young_Birch_Tree_3.fbx" id="11_wtdpe"]
@@ -496,7 +497,14 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703,
 [node name="wooden_fence_extension90" parent="Fences" instance=ExtResource("5_yfumg")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 29.8703, 0.0282525, -57.6571)
 
+[node name="EnvironmentToggler" type="Node3D" parent="." node_paths=PackedStringArray("tree_parents", "foliage_parents", "nature_prop_parents")]
+script = ExtResource("8_rc1qb")
+tree_parents = [NodePath("../Trees")]
+foliage_parents = [NodePath("../Bushes"), NodePath("../Clovers"), NodePath("../Grass"), NodePath("../Ferns")]
+nature_prop_parents = [NodePath("../Rocks"), NodePath("../Birds"), NodePath("../Branches"), NodePath("../Mushrooms")]
+
 [node name="Trees" type="Node3D" parent="."]
+visible = false
 
 [node name="Birch_Tree_1" parent="Trees" instance=ExtResource("7_bq7wc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 1, -68)
@@ -811,6 +819,7 @@ transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 54.1686, 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 1, -51)
 
 [node name="Rocks" type="Node3D" parent="."]
+visible = false
 
 [node name="Rock_1" parent="Rocks" instance=ExtResource("19_37ji8")]
 transform = Transform3D(7.7, 0, 0, 0, 7.7, 0, 0, 0, 7.7, -9, 0, -84)
@@ -825,6 +834,7 @@ transform = Transform3D(4.6, 0, 0, 0, 4.6, 0, 0, 0, 4.6, 18, 0, -65)
 transform = Transform3D(-0.647339, 0, -3.45415, 0, 3.1, 0, 2.4159, 0, -0.925536, 20, 0, -80)
 
 [node name="Bushes" type="Node3D" parent="."]
+visible = false
 
 [node name="Blackberry_Bush_1a" parent="Bushes" instance=ExtResource("23_e60y0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -65)
@@ -857,6 +867,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1, -81)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, -80)
 
 [node name="Birds" type="Node3D" parent="."]
+visible = false
 
 [node name="Blackbird_f" parent="Birds" instance=ExtResource("33_rhbad")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0809, 1.65041, -59.7078)
@@ -865,11 +876,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0809, 1.65041, -59.7078)
 transform = Transform3D(0.892743, 0, 0.450566, 0, 1, 0, -0.450566, 0, 0.892743, -10.2588, 5.03571, -74.2669)
 
 [node name="Branches" type="Node3D" parent="."]
+visible = false
 
 [node name="Branch_2" parent="Branches" instance=ExtResource("35_5vf7n")]
 transform = Transform3D(0.353553, -0.353553, 0.866025, 0.707107, 0.707107, 0, -0.612372, 0.612372, 0.5, -13.2502, -0.0665935, -65.8204)
 
 [node name="Mushrooms" type="Node3D" parent="."]
+visible = false
 
 [node name="Brown_Mushrooms_Cluster_1" parent="Mushrooms" instance=ExtResource("36_of4w5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1948, -0.0133467, -64.2724)
@@ -908,6 +921,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0, -82)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -87)
 
 [node name="Clovers" type="Node3D" parent="."]
+visible = false
 
 [node name="Clover_1" parent="Clovers" instance=ExtResource("46_qk8bq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -63)
@@ -943,6 +957,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -66)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -65)
 
 [node name="Grass" type="Node3D" parent="."]
+visible = false
 
 [node name="Forest_Grass_3" parent="Grass" instance=ExtResource("49_hh3fj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -65)
@@ -999,6 +1014,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -71)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -85)
 
 [node name="Ferns" type="Node3D" parent="."]
+visible = false
 
 [node name="Fern_1a" parent="Ferns" instance=ExtResource("55_hxp5f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -71)
