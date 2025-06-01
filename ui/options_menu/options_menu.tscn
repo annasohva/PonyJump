@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://0rvou8xusut4"]
+[gd_scene load_steps=10 format=3 uid="uid://0rvou8xusut4"]
 
 [ext_resource type="Theme" uid="uid://bsgy7q3257cf0" path="res://resources/ui/button_theme.tres" id="1_3s1t0"]
 [ext_resource type="Script" uid="uid://bpa4f4e5fetgb" path="res://ui/options_menu/options_menu.gd" id="1_8h7tm"]
+[ext_resource type="FontFile" uid="uid://by5857nvvi54i" path="res://assets/fonts/dynapuff_variable_font.ttf" id="3_utl02"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en5ci"]
 bg_color = Color(0.560784, 0.403922, 0.321569, 1)
@@ -14,6 +15,29 @@ corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_kx268"]
+font = ExtResource("3_utl02")
+font_size = 20
+font_color = Color(0.941176, 0.890196, 0.839216, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wakw5"]
+font = ExtResource("3_utl02")
+font_size = 18
+font_color = Color(1, 0.901961, 0.8, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utl02"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tjtux"]
+font = ExtResource("3_utl02")
+font_size = 20
+font_color = Color(0.941176, 0.890196, 0.839216, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s1t0"]
 bg_color = Color(0.772549, 0.603922, 0.415686, 1)
@@ -65,29 +89,403 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_en5ci")
 [node name="GameplayOptions" type="Control" parent="BackgroundPanel"]
 layout_mode = 1
 anchor_left = 0.05
-anchor_top = 0.05
+anchor_top = 0.1
 anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxGameplayOptions" type="VBoxContainer" parent="BackgroundPanel/GameplayOptions"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CameraSettingsLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+text = "Camera"
+label_settings = SubResource("LabelSettings_kx268")
+
+[node name="HBoxCameraSpeedX" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CameraSpeedXLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Camera speed X"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="CameraSpeedXSlider" type="HSlider" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 0.1
+max_value = 1.5
+step = 0.01
+value = 0.8
+
+[node name="CameraSpeedXLineEdit" type="LineEdit" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedX"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "0.8"
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="HBoxCameraSpeedY" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CameraSpeedY" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Camera speed Y"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="CameraSpeedYSlider" type="HSlider" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 0.1
+max_value = 1.5
+step = 0.01
+value = 0.8
+
+[node name="CameraSpeedYLineEdit" type="LineEdit" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraSpeedY"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "0.8"
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="HBoxCameraInvertX" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+
+[node name="CameraInvertXLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertX"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Invert camera X"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="CameraInvertXCheckButton" type="CheckButton" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertX"]
+layout_mode = 2
+
+[node name="HBoxCameraInvertY" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+
+[node name="CameraInvertYLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertY"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Invert camera Y"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="CameraInvertYCheckButton" type="CheckButton" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxCameraInvertY"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_utl02")
+
+[node name="AccessibilitySettingsLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+text = "Accessibility"
+label_settings = SubResource("LabelSettings_tjtux")
+
+[node name="HBoxPerfectJumpParticle" type="HBoxContainer" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions"]
+layout_mode = 2
+
+[node name="PerfectJumpParticleLabel" type="Label" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticle"]
+layout_mode = 2
+text = "Perfect jump particle effect"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="PerfectJumpParticleCheckButton" type="CheckButton" parent="BackgroundPanel/GameplayOptions/VBoxGameplayOptions/HBoxPerfectJumpParticle"]
+layout_mode = 2
+button_pressed = true
 
 [node name="AudioOptions" type="Control" parent="BackgroundPanel"]
+visible = false
 layout_mode = 1
 anchor_left = 0.05
-anchor_top = 0.05
+anchor_top = 0.1
 anchor_right = 0.95
-anchor_bottom = 0.95
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GraphicsOptions" type="Control" parent="BackgroundPanel"]
+[node name="VBoxAudioOptions" type="VBoxContainer" parent="BackgroundPanel/AudioOptions"]
 layout_mode = 1
-anchor_left = 0.05
-anchor_top = 0.05
-anchor_right = 0.95
-anchor_bottom = 0.95
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AudioSettingsLabel" type="Label" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
+layout_mode = 2
+text = "Audio"
+label_settings = SubResource("LabelSettings_kx268")
+
+[node name="HBoxGeneralVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="GeneralVolumeLabel" type="Label" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "General"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="GeneralVolumeSlider" type="HSlider" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+value = 100.0
+
+[node name="GeneralVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxGeneralVolume"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "100"
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="HBoxMusicVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MusicVolumeLabel" type="Label" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Music"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="MusicVolumeSlider" type="HSlider" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+value = 100.0
+
+[node name="MusicVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxMusicVolume"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "100"
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="HBoxSFXVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SFXVolumeLabel" type="Label" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "SFX"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="SFXVolumeSlider" type="HSlider" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+editable = false
+
+[node name="SFXVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxSFXVolume"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "0"
+editable = false
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="HBoxAmbienceVolume" type="HBoxContainer" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AmbienceVolumeLabel" type="Label" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Ambience"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="AmbienceVolumeSlider" type="HSlider" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 1
+editable = false
+
+[node name="AmbienceVolumeLineEdit" type="LineEdit" parent="BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+text = "0"
+editable = false
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="GraphicsOptions" type="Control" parent="BackgroundPanel"]
+visible = false
+layout_mode = 1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxGraphicsOptions" type="VBoxContainer" parent="BackgroundPanel/GraphicsOptions"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GraphicsSettingsLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+text = "Graphics"
+label_settings = SubResource("LabelSettings_kx268")
+
+[node name="HBoxGameWindow" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="GameWindowLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxGameWindow"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Game window"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="GameWindowOptionButton" type="OptionButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxGameWindow"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+alignment = 1
+selected = 0
+item_count = 2
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+
+[node name="HBoxFPS" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="FPSLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFPS"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Frame rate"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="FPSOptionButton" type="OptionButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFPS"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+alignment = 1
+selected = 0
+item_count = 5
+popup/item_0/text = "No limit"
+popup/item_0/id = 0
+popup/item_1/text = "30"
+popup/item_1/id = 1
+popup/item_2/text = "60"
+popup/item_2/id = 2
+popup/item_3/text = "120"
+popup/item_3/id = 3
+popup/item_4/text = "144"
+popup/item_4/id = 4
+
+[node name="HBoxAntiAliasing" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="AntiAliasingLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxAntiAliasing"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Anti-aliasing"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="AntiAliasingOptionButton" type="OptionButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxAntiAliasing"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("1_3s1t0")
+alignment = 1
+selected = 0
+item_count = 4
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "MSAA 2x"
+popup/item_1/id = 1
+popup/item_2/text = "MSAA 4x"
+popup/item_2/id = 2
+popup/item_3/text = "MSAA 8x"
+popup/item_3/id = 3
+
+[node name="HBoxShadows" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="ShadowsLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxShadows"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Shadows"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="ShadowsCheckButton" type="CheckButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxShadows"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HSeparator" type="HSeparator" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_utl02")
+
+[node name="EnvironmentSettingsLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+text = "Environment"
+label_settings = SubResource("LabelSettings_tjtux")
+
+[node name="HBoxTrees" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="TreesLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxTrees"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Trees"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="TreesCheckButton" type="CheckButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxTrees"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HBoxFoliage" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="FoliageLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFoliage"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Foliage"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="FoliageCheckButton" type="CheckButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFoliage"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HBoxNatureProps" type="HBoxContainer" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions"]
+layout_mode = 2
+
+[node name="NaturePropsLabel" type="Label" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxNatureProps"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Nature props"
+label_settings = SubResource("LabelSettings_wakw5")
+
+[node name="NaturePropsCheckButton" type="CheckButton" parent="BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxNatureProps"]
+layout_mode = 2
+button_pressed = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -108,4 +506,5 @@ theme = ExtResource("1_3s1t0")
 theme_override_styles/normal = SubResource("StyleBoxFlat_3s1t0")
 text = "Close"
 
+[connection signal="tab_changed" from="TabBar" to="." method="_on_tab_bar_tab_changed"]
 [connection signal="pressed" from="HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
