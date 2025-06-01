@@ -20,6 +20,7 @@ music_player = NodePath("MusicPlayer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
 process_mode = 3
+bus = &"Music"
 
 [node name="ScoreboardManager" type="Node" parent="."]
 process_mode = 3
