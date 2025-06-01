@@ -51,7 +51,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("camera_speed_x_slider", "camera_speed_x_spin_box", "camera_speed_y_slider", "camera_speed_y_spin_box", "camera_invert_x_check_button", "camera_invert_y_check_button", "perfect_jump_particles_check_button", "general_volume_slider", "general_volume_spin_box", "music_volume_slider", "music_volume_spin_box", "sfx_volume_slider", "sfx_volume_spin_box", "ambience_volume_slider", "ambience_volume_spin_box", "game_window_option_button", "fps_option_button", "anti_aliasing_option_button", "shadows_check_button", "trees_check_button", "foliage_check_button", "nature_props_check_button")]
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("camera_speed_x_slider", "camera_speed_x_spin_box", "camera_speed_y_slider", "camera_speed_y_spin_box", "camera_invert_x_check_button", "camera_invert_y_check_button", "perfect_jump_particles_check_button", "general_volume_slider", "general_volume_spin_box", "music_volume_slider", "music_volume_spin_box", "sfx_volume_slider", "sfx_volume_spin_box", "ambience_volume_slider", "ambience_volume_spin_box", "game_window_option_button", "game_window_hbox", "fps_option_button", "anti_aliasing_option_button", "shadows_check_button", "trees_check_button", "foliage_check_button", "nature_props_check_button")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -76,6 +76,7 @@ sfx_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HB
 ambience_volume_slider = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume/AmbienceVolumeSlider")
 ambience_volume_spin_box = NodePath("BackgroundPanel/AudioOptions/VBoxAudioOptions/HBoxAmbienceVolume/AmbienceVolumeSpinBox")
 game_window_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxGameWindow/GameWindowOptionButton")
+game_window_hbox = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxGameWindow")
 fps_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxFPS/FPSOptionButton")
 anti_aliasing_option_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxAntiAliasing/AntiAliasingOptionButton")
 shadows_check_button = NodePath("BackgroundPanel/GraphicsOptions/VBoxGraphicsOptions/HBoxShadows/ShadowsCheckButton")

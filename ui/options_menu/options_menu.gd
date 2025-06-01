@@ -37,6 +37,7 @@ class_name OptionsMenu extends Control
 @export_group("Graphics Options References") 
 @export_subgroup("Graphics Options")
 @export var game_window_option_button: OptionButton
+@export var game_window_hbox: HBoxContainer
 @export var fps_option_button: OptionButton
 @export var anti_aliasing_option_button: OptionButton
 @export var shadows_check_button: CheckButton
@@ -230,14 +231,18 @@ func _ready() -> void:
 	
 	# Graphics options
 	
-	# Connecting game_window_option_button item_selected signal
-	game_window_option_button.item_selected.connect(EventSystem.SET_set_game_window.emit)
-	
-	# Loading saved game_window value
-	game_window_option_button.selected = settings.get(
-		SettingsManager.GAME_WINDOW_KEY,
-		game_window_option_button.selected  # Using editor value as default
-	)
+	# Hiding game window option button in web builds
+	if OS.has_feature("web"):
+		game_window_hbox.visible = false
+	else:
+		# Connecting game_window_option_button item_selected signal
+		game_window_option_button.item_selected.connect(EventSystem.SET_set_game_window.emit)
+		
+		# Loading saved game_window value
+		game_window_option_button.selected = settings.get(
+			SettingsManager.GAME_WINDOW_KEY,
+			game_window_option_button.selected  # Using editor value as default
+		)
 	
 	# Connecting fps_option_button item_selected signal
 	fps_option_button.item_selected.connect(EventSystem.SET_set_fps.emit)

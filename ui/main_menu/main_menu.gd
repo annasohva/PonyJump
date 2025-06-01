@@ -6,6 +6,10 @@ extends Control
 
 func _ready() -> void:
 	EventSystem.MUS_play_music.emit(MusicReference.Keys.PonyJump)
+	
+	# Hiding quit button in web builds since it doesn't work
+	if OS.has_feature("web"):
+		quit_button.visible = false
 
 
 func _on_play_button_pressed() -> void:
