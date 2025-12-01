@@ -25,6 +25,10 @@ EventSystem="*res://game/event_system.gd"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 forward={

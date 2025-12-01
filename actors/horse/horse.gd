@@ -20,8 +20,8 @@ enum Gaits
 const CAMERA_CLAMP_DEGREES_X := 45
 const TURNING_SPEED := 3
 const JUMP_CHARGE_SPEED := 5
-const JUMP_VELOCITY := 2
-const JUMP_HEIGHT_OFFSET := 0.4
+const JUMP_VELOCITY := 1.5
+const JUMP_HEIGHT_OFFSET := 0
 
 var is_jumping: bool:
 	get:
@@ -151,9 +151,9 @@ func adjust_speed():
 		Gaits.Stop:
 			gait_speed = 0
 		Gaits.Walk:
-			gait_speed = 5
+			gait_speed = 3
 		Gaits.Trot:
-			gait_speed = 10
+			gait_speed = 8
 		Gaits.Canter:
 			gait_speed = 15
 		Gaits.Gallop:
